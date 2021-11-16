@@ -3,24 +3,41 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.15.0",
+    "@craco/craco": "^6.1.2",
+    "@testing-library/jest-dom": "^5.13.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
-    "@types/jest": "^26.0.24",
-    "@types/node": "^12.20.37",
-    "@types/react": "^17.0.34",
-    "@types/react-dom": "^17.0.11",
+    "@types/jest": "^26.0.23",
+    "@types/node": "^12.20.15",
+    "@types/react": "^17.0.11",
+    "@types/react-dom": "^17.0.7",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/redux-actions": "^2.6.1",
+    "axios": "^0.21.1",
+    "craco-plugin-scoped-css": "^1.1.1",
+    "js-cookie": "^3.0.0",
+    "node-sass": "^6.0.0",
     "react": "^17.0.2",
+    "react-awesome-swiper": "^1.4.16",
+    "react-cookie": "^4.0.3",
     "react-dom": "^17.0.2",
+    "react-ratings-declarative": "^3.4.1",
+    "react-redux": "^7.2.4",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "typescript": "^4.4.4",
+    "redux-actions": "^2.6.5",
+    "redux-logger": "^3.0.6",
+    "styled-components": "^5.3.1",
+    "swiper": "^6.8.0",
+    "typesafe-actions": "^5.1.0",
+    "typescript": "^4.3.2",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "set PORT=8080 && craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject"
   },
   "eslintConfig": {
     "extends": [
@@ -39,5 +56,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "craco-alias": "^3.0.1"
   }
 }
