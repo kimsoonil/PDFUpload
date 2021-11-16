@@ -24,7 +24,7 @@ const ZwibblerComponent = () => {
     <div
       id="zwibbler"
       className="zwibbler"
-      style={{ width: "100%", height: "1080px" }}
+      style={{ width: "calc(100% - 200px)", height: "100%", display: "inline-block" }}
     ></div>
 
   )
