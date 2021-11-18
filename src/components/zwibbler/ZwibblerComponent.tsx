@@ -3,15 +3,6 @@ import "./Zwibbler.scss"
 const ZwibblerComponent = () => {
   let Zwibbler = window["Zwibbler"];
   const [ctx, createCtx] = useState<{ [key: string]: any }>({});
-  const func1 = () => {
-    console.log("func1호출", ctx);
-    var nodes = ctx.getAllNodes();
-    console.log(nodes);
-    for (var i = 0; i < nodes.length; i++) {
-      // process each node.
-      ctx.alignNodes("middle", nodes);
-    }
-  }
   useEffect(() => {
     const zwibblerObj = Zwibbler.create("zwibbler", {
       showPropertyPanel: false,
