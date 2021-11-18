@@ -5,9 +5,9 @@ import Main from '../pages/Main';
 const Root: React.FC = () => (
     <BrowserRouter>
     <Switch>
-      <Route path="/" exact component={App} />
+      <Route path="/detail" exact component={App} />
       <Route path="/main" exact  component={Main} />
-      <Redirect path="*" to="/" />
+      <Redirect path="*" to="/main" />
     </Switch>
   </BrowserRouter>
 )

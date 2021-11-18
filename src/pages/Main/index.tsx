@@ -1,4 +1,4 @@
-import React, {useRef,MouseEvent,MouseEventHandler,useLayoutEffect} from 'react'
+import React, {useRef,useState,MouseEvent,MouseEventHandler,useLayoutEffect} from 'react'
 import 'src/assets/scss/reset.scss'
 import 'src/assets/scss/Main.scss'
 
@@ -9,6 +9,7 @@ interface IProps_Square {
 
 const Main = () => {
   const inputFileRef = useRef<HTMLInputElement>(null);
+  const [selectedFile, setSelectedFile] = useState<String>();
 
     const workbookList=[
         {id:1,title:"",img:"mock-exam.svg"},
@@ -20,22 +21,25 @@ const Main = () => {
         
     ];
     
-    const handleClickInputFlie = () =>{
+    const handleClickFlie = () =>{
       if(!inputFileRef.current) return;
       inputFileRef.current.click();
     }
-    
+    const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0].name);
+    console.log(event.target.files[0].name)
+    console.log(selectedFile);
+    //TODO 서버 GET 책생성 + 이미지 추가
+  };
   return (
     <div className="Main">
       <div className="sideBar">
           <div className="list activate"><div className="img"></div>문제집</div>
-          <div className="list"> <div className="img"><img src="./images/main/workbook.svg" alt="workbook"/> </div>문제집</div>
+          <div className="list"> <div className="img"></div>문제집</div>
       </div>
       <div className="container">
-      <div className="container-card"><div className="plus" onClick={handleClickInputFlie}></div>
-      
-      
-      <input type="file" name="imgfile" ref={inputFileRef}/>
+      <div className="container-card"><div className="plus" onClick={handleClickFlie}></div>
+      <input type="file" name="imgfile" ref={inputFileRef}  accept=".svg, .jpg, .png" onChange={handleFileChange}/>
       
       </div>
           {workbookList.map(item =>{
@@ -47,14 +51,14 @@ const Main = () => {
                 }
               return(<div className="container-card" key={item.id}>
                   <div >
-                    <img src={`./images/main/${item.img}`} alt={`${item.img}`}/>
+                    <img src={require(`src/images/main/${item.img}`).default} alt={`${item.img}`}/>
                     <div className="container-card-shadow">
                       <div className="iocnGraup">
                           <div className="description">
-                              <img src="./images/main/photo.svg" alt="icon-poto" />
+                              <img src={require("src/images/main/photo.svg").default} alt="icon-poto" />
                             </div>
                           <div className="delete">
-                              <img src="./images/main/trash.png" alt="icon-poto" />
+                              <img src={require("src/images/main/trash.png").default} alt="icon-poto" />
                               </div>
                               </div>
                          

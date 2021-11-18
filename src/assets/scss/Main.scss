@@ -23,8 +23,10 @@
 			margin-top: 54px;
 		}
 		.img {
-			background-image: url("/public/images/main/bookmark.svg");
+			background-image: url("../../images/main/workbook.svg");
+			background-repeat: no-repeat;
 			width: 20px;
+			height: 20px;
 			margin-left: 22px;
 			margin-right: 13px;
 		}
@@ -33,6 +35,9 @@
 			background: #0bcea5;
 			border-radius: 10px;
 			color: #fff;
+			.img {
+				background-image: url("../../images/main/bookmark.svg");
+			}
 		}
 	}
 }
@@ -106,6 +111,7 @@ input[type="file"] {
 				height: 72px;
 				width: 2px;
 				background-color: #ccc;
+				cursor: pointer;
 			}
 			&::before {
 				transform: rotate(90deg);
