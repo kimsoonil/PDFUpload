@@ -23,18 +23,22 @@
 			margin-top: 54px;
 		}
 		.img {
+			background-image: url("/public/images/main/bookmark.svg");
 			width: 20px;
 			margin-left: 22px;
 			margin-right: 13px;
 		}
-		&:hover {
+		&:hover,
+		&.activate {
 			background: #0bcea5;
 			border-radius: 10px;
 			color: #fff;
 		}
 	}
 }
-
+input[type="file"] {
+	display: none;
+}
 .container {
 	display: flex;
 	flex-wrap: wrap;

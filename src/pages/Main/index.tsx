@@ -1,7 +1,15 @@
+import React, {useRef,MouseEvent,MouseEventHandler,useLayoutEffect} from 'react'
 import 'src/assets/scss/reset.scss'
 import 'src/assets/scss/Main.scss'
 
-function Main () {
+interface IProps_Square {
+  message: string;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+const Main = () => {
+  const inputFileRef = useRef<HTMLInputElement>(null);
+
     const workbookList=[
         {id:1,title:"",img:"mock-exam.svg"},
         {id:2,title:"빠작2",img:"Chinese-literature.svg"},
@@ -11,14 +19,25 @@ function Main () {
         {id:6,title:"고등학교 수학 나",img:"higher-mathematics.svg"},
         
     ];
+    
+    const handleClickInputFlie = () =>{
+      if(!inputFileRef.current) return;
+      inputFileRef.current.click();
+    }
+    
   return (
     <div className="Main">
       <div className="sideBar">
-          <div className="list"><div className="img"><img src="./images/main/bookmark.svg" alt="workbook"/></div>문제집</div>
+          <div className="list activate"><div className="img"></div>문제집</div>
           <div className="list"> <div className="img"><img src="./images/main/workbook.svg" alt="workbook"/> </div>문제집</div>
       </div>
       <div className="container">
-      <div className="container-card"><div className="plus"><input type="file" name="myfile" id="myfile" accept="image/*" /></div></div>
+      <div className="container-card"><div className="plus" onClick={handleClickInputFlie}></div>
+      
+      
+      <input type="file" name="imgfile" ref={inputFileRef}/>
+      
+      </div>
           {workbookList.map(item =>{
               let workBookTitle;
                 if(item.title !== ""){
@@ -55,4 +74,6 @@ function Main () {
     </div>
   );
 };
+
+
 export default Main 
