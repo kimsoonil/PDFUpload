@@ -3,9 +3,17 @@ import "./Zwibbler.scss"
 const ZwibblerComponent = () => {
   let Zwibbler = window["Zwibbler"];
   const [ctx, createCtx] = useState<{ [key: string]: any }>({});
-
+  const func1 = () => {
+    console.log("func1호출", ctx);
+    var nodes = ctx.getAllNodes();
+    console.log(nodes);
+    for (var i = 0; i < nodes.length; i++) {
+      // process each node.
+      ctx.alignNodes("middle", nodes);
+    }
+  }
   useEffect(() => {
-    createCtx(Zwibbler.create("zwibbler", {
+    const zwibblerObj = Zwibbler.create("zwibbler", {
       showPropertyPanel: false,
       showColourPanel: false,
       showCircleTool: false,
@@ -16,17 +24,24 @@ const ZwibblerComponent = () => {
       showLineTool: false,
       showCopyPaste: false,
       showUndoRedo: false,
-      showtoolbar: true
-    }));
-    console.log(ctx);
+      showtoolbar: true,
+    })
+    zwibblerObj.addKeyboardShortcut("Shift+G", (event) => {
+      const nodes = zwibblerObj.getSelectedNodes();
+      zwibblerObj.alignNodes("middle", nodes);
+      zwibblerObj.forEachNode((id) => {
+        console.log("Got node id: ", id);
+      })
+    });
+    createCtx(zwibblerObj);
   }, [])
   return (
     <div
       id="zwibbler"
       className="zwibbler"
       style={{ width: "calc(100% - 200px)", height: "100%", display: "inline-block" }}
-    ></div>
-
+    >
+    </div>
   )
 }
 export default ZwibblerComponent
