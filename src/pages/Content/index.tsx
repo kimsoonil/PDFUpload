@@ -1,8 +1,8 @@
 import 'src/assets/scss/reset.scss'
-import '../assets/scss/App.scss'
+import 'src/assets/scss/Content.scss'
 import ZwibblerComponent from "src/components/zwibbler/ZwibblerComponent";
 import MovableList from "src/components/MovableList"
-const App = () => {
+const Content = () => {
   return (
     <div className="App">
       <ZwibblerComponent />
@@ -10,4 +10,4 @@ const App = () => {
     </div>
   );
 };
-export default App
+export default Content

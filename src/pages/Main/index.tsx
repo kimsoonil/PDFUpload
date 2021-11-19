@@ -1,36 +1,102 @@
-import React, {useRef,useState,MouseEvent,MouseEventHandler,useLayoutEffect} from 'react'
+import React, {useRef,useState,useEffect,useCallback} from 'react'
+import { useHistory } from "react-router-dom";
+import uuid from "react-uuid"
 import 'src/assets/scss/reset.scss'
 import 'src/assets/scss/Main.scss'
+import Container from './Container';
 
-interface IProps_Square {
-  message: string;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
-}
+
+
+const workContentList=[
+  {id:uuid(),title:"",img:"mock-exam.svg"},
+  {id:uuid(),title:"빠작2",img:"Chinese-literature.svg"},
+  {id:uuid(),title:"한국 중학생 기출 문제집",img:"secondary-math.svg"},
+  {id:uuid(),title:"너희들의 기출문제",img:"calculus.svg"},
+  {id:uuid(),title:"메가스터디 초등수학 3-1",img:"elementary-math.svg"}, 
+  {id:uuid(),title:"고등학교 수학 나",img:"higher-mathematics.svg"},
+  
+];
 
 const Main = () => {
-  const inputFileRef = useRef<HTMLInputElement>(null);
-  const [selectedFile, setSelectedFile] = useState<String>();
-
-    const workbookList=[
-        {id:1,title:"",img:"mock-exam.svg"},
-        {id:2,title:"빠작2",img:"Chinese-literature.svg"},
-        {id:3,title:"한국 중학생 기출 문제집",img:"secondary-math.svg"},
-        {id:4,title:"너희들의 기출문제",img:"calculus.svg"},
-        {id:5,title:"메가스터디 초등수학 3-1",img:"elementary-math.svg"}, 
-        {id:6,title:"고등학교 수학 나",img:"higher-mathematics.svg"},
-        
-    ];
-    
-    const handleClickFlie = () =>{
-      if(!inputFileRef.current) return;
-      inputFileRef.current.click();
+  const history = useHistory();  
+  const CreateFileRef = useRef<HTMLInputElement | null>(null);
+  const UpdataFileRef = useRef<HTMLInputElement | null>(null);
+  const [selectedFile, setSelectedFile] = useState<String | null>();
+  const [contentDataList,setContentDataList] = useState(workContentList);
+  const [workContentListId, setWorkContentListId] = useState<any>(0)
+  
+    const handleClickCreateFile = () =>{
+      if(!CreateFileRef.current) return;
+      CreateFileRef.current.click();
     }
-    const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0].name);
+    const CreateContent = (event) => {
+      if(!event.target.files[0].name) return;
     console.log(event.target.files[0].name)
-    console.log(selectedFile);
-    //TODO 서버 GET 책생성 + 이미지 추가
+    const newContent = {
+      id:uuid(),
+      title:"",
+      img:event.target.files[0].name
+    }
+    ;
+    //contentDataList.unshift(newContent)
+    setContentDataList(contentDataList => [...contentDataList,newContent]);
+    console.log(contentDataList);
+    //TODO 서버 GET content생성 + 이미지 추가
   };
+  // useEffect(() => {
+   
+  //   console.log(contentDataList);
+  //   },[contentDataList])
+  const handleClickUpdataFile = useCallback((e: any, id:any) =>{
+    e.stopPropagation();
+     console.log(id);
+    setWorkContentListId(id)
+     if(!UpdataFileRef.current) return;
+     UpdataFileRef.current.click();
+  },[]);
+  
+  const UpdataContentImage = (event: any) => {
+    if(!event.target.files[0].name) return;
+    let reader = new FileReader();
+    let file = event.target.files[0];
+    setSelectedFile(event.target.files[0].name);
+    
+    reader.onloadend = (e) => {
+      setContentDataList(
+      contentDataList.map(contentDataList => contentDataList.id === workContentListId ? {
+        ...contentDataList,
+        img:reader.result as string
+      } :contentDataList)
+     ) 
+    }
+    if(file)
+      reader.readAsDataURL(file);  
+   
+  //TODO 서버 PUT 이미지 변경
+};
+
+const removeContent = (e:any ,index:number) =>{
+  e.stopPropagation();
+  const isRemoveContent = window.confirm("정말 삭제하시겠습니까?");
+  if(!isRemoveContent) return;
+  let clone = [...contentDataList]
+  clone.splice(index, 1)
+  setContentDataList(clone);
+}
+const UpdataContentTitle =(e: any, id:any) => {
+  
+  setContentDataList(
+    contentDataList.map(contentDataList => contentDataList.id === id ? {
+      ...contentDataList,
+      title:e.target.value
+    } :contentDataList)
+   ) 
+   console.log(contentDataList)
+   //TODO 서버 PUT title 변경 
+}
+const handleClickContent = (id:any) => {
+  history.push(`/content/${id}`)
+}
   return (
     <div className="Main">
       <div className="sideBar">
@@ -38,42 +104,27 @@ const Main = () => {
           <div className="list"> <div className="img"></div>문제집</div>
       </div>
       <div className="container">
-      <div className="container-card"><div className="plus" onClick={handleClickFlie}></div>
-      <input type="file" name="imgfile" ref={inputFileRef}  accept=".svg, .jpg, .png" onChange={handleFileChange}/>
-      
+      <div className="container-card"><div className="plus" onClick={handleClickCreateFile}></div>
+      <input type="file" name="CreateFile" ref={CreateFileRef}  accept=".svg, .jpg, .png, .pdf" onChange={CreateContent}/>
       </div>
-          {workbookList.map(item =>{
-              let workBookTitle;
-                if(item.title !== ""){
-                    workBookTitle = item.title
-                }else{
-                    workBookTitle = "책제목을 입력해주세요"
-                }
-              return(<div className="container-card" key={item.id}>
-                  <div >
-                    <img src={require(`src/images/main/${item.img}`).default} alt={`${item.img}`}/>
-                    <div className="container-card-shadow">
-                      <div className="iocnGraup">
-                          <div className="description">
-                              <img src={require("src/images/main/photo.svg").default} alt="icon-poto" />
-                            </div>
-                          <div className="delete">
-                              <img src={require("src/images/main/trash.png").default} alt="icon-poto" />
-                              </div>
-                              </div>
-                         
-                      </div>
-                  </div>
-                  
-                  <div className="container-card-title" >
-                  {item.title !== "" ?
-                    workBookTitle :
-                    <input placeholder= "책제목을 입력해주세요"/>
-                  }
-                  
-                  </div>
-              </div>) 
-          })}
+          {contentDataList.map((item,index) =>{
+              return(
+                 <Container 
+                 item={item}
+                 index={index}
+                 handleClickContent={(e) => handleClickContent(e)}
+                 handleClickUpdataFile={handleClickUpdataFile} 
+                 UpdataFileRef={UpdataFileRef}
+                 UpdataContentImage={UpdataContentImage}
+                 removeContent={removeContent}
+                 key={index}
+                 UpdataContentTitle={UpdataContentTitle}
+                 />
+                 
+              ) 
+          }
+          )}
+          <input type="file" name="CreateFile" ref={UpdataFileRef}  accept=".svg, .jpg, .png, .pdf" onChange={UpdataContentImage}/>
       </div>
     </div>
   );

@@ -39,7 +39,7 @@ const VaryingHeights: React.FC = () => {
                             cursor: isDragged ? 'grabbing' : 'grab',
                         }}
                     >
-                        <img src="/images/list.png" />
+                        <img src={require("src/images/list.png").default} />
                         {index == value &&
                             <input type="number" className="number-input"
                                 style={{
