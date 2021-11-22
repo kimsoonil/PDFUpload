@@ -5,7 +5,7 @@ import Main from '../pages/Main';
 const Root: React.FC = () => (
     <BrowserRouter>
     <Switch>
-      <Route path="/main" exact  component={Main} />
+      <Route path="/main"  component={Main} />
       <Route path="/content/*" exact component={Content} />
       <Redirect path="*" to="/main" />
     </Switch>
