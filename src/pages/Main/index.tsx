@@ -1,10 +1,12 @@
-import React, {useRef,useState,useEffect,useCallback} from 'react'
+import React, {useRef,useState,useEffect,useCallback, useMemo} from 'react'
 import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
 import uuid from "react-uuid"
 import 'src/assets/scss/reset.scss'
 import 'src/assets/scss/Main.scss'
 import Container from './Container';
-
+import { RootReducerType } from 'src/modules';
+import { getUsersStart } from 'src/modules/users';
 
 
 const workContentList=[
@@ -14,16 +16,27 @@ const workContentList=[
   {id:uuid(),title:"너희들의 기출문제",img:"calculus.svg"},
   {id:uuid(),title:"메가스터디 초등수학 3-1",img:"elementary-math.svg"}, 
   {id:uuid(),title:"고등학교 수학 나",img:"higher-mathematics.svg"},
-  
 ];
 
 const Main = () => {
   const history = useHistory();  
+  const dispatch = useDispatch();
   const CreateFileRef = useRef<HTMLInputElement | null>(null);
   const UpdataFileRef = useRef<HTMLInputElement | null>(null);
   const [selectedFile, setSelectedFile] = useState<String | null>();
   const [contentDataList,setContentDataList] = useState(workContentList);
   const [workContentListId, setWorkContentListId] = useState<any>(0)
+  
+  const state = useSelector((state: RootReducerType) => state.users);
+  console.log(state);
+
+  useEffect(() => {
+    dispatch(getUsersStart());
+  }, [dispatch]);
+
+  const { loading, data, error } = state;
+  
+  
   
     const handleClickCreateFile = () =>{
       if(!CreateFileRef.current) return;
@@ -43,10 +56,7 @@ const Main = () => {
     console.log(contentDataList);
     //TODO 서버 GET content생성 + 이미지 추가
   };
-  // useEffect(() => {
-   
-  //   console.log(contentDataList);
-  //   },[contentDataList])
+  
   const handleClickUpdataFile = useCallback((e: any, id:any) =>{
     e.stopPropagation();
      console.log(id);
@@ -97,6 +107,11 @@ const UpdataContentTitle =(e: any, id:any) => {
 const handleClickContent = (id:any) => {
   history.push(`/content/${id}`)
 }
+
+if (loading) {
+  return <div>Loading...</div>;
+}
+
   return (
     <div className="Main">
       <div className="sideBar">

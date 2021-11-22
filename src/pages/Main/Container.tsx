@@ -29,7 +29,7 @@ const Container: React.FC<Props> = (props: Props) =>{
                 onClick={() => props.handleClickContent(props.item.id)}
                 >
                     <div className="iocnGraup">
-                        <div className="description" onClick={(e) => props.handleClickUpdataFile(e , props.item.id)}>
+                        <div className="description" onClick={e => props.handleClickUpdataFile(e , props.item.id)}>
                             <img src={require("src/images/main/photo.svg").default} alt="icon-poto" />
                             
                         </div>
