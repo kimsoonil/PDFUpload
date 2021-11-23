@@ -1,15 +1,15 @@
 import {
-  GetUsersActionsType,
-  GET_USERS_START,
-  GET_USERS_SUCCESS,
-  GET_USERS_ERROR
+  GetContentsActionsType,
+  GET_CONTENTS_START,
+  GET_CONTENTS_SUCCESS,
+  GET_CONTENTS_ERROR
 } from './actions';
-import { UsersType } from './types';
+import { ContentsType } from './types';
 import { AxiosError } from 'axios';
 
 type State = {
   loading: boolean;
-  data: UsersType[] | null;
+  data: ContentsType[] | null;
   error: AxiosError | null;
 };
 
@@ -21,21 +21,21 @@ const initiaState = {
 
 export default function users(
   state: State = initiaState,
-  action: GetUsersActionsType
+  action: GetContentsActionsType
 ): State {
   switch (action.type) {
-    case GET_USERS_START:
+    case GET_CONTENTS_START:
       return {
         ...state,
         loading: true
       };
-    case GET_USERS_SUCCESS:
+    case GET_CONTENTS_SUCCESS:
       return {
         ...state,
         loading: false,
         data: action.payload
       }
-    case GET_USERS_ERROR:
+    case GET_CONTENTS_ERROR:
       return {
         ...state,
         loading: false,

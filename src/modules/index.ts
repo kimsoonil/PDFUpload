@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux';
-import users, { getUsersSaga } from './users';
+import contents, { getContentsSaga } from './Contents';
 import { all } from 'redux-saga/effects';
 
 const rootReducer = combineReducers({
-  users
+  contents
 });
 
 export function* rootSaga() {
-  yield all([getUsersSaga()]);
+  yield all([getContentsSaga()]);
 }
 
 export type RootReducerType = ReturnType<typeof rootReducer>;

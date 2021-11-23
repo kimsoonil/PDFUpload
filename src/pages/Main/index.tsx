@@ -6,7 +6,7 @@ import 'src/assets/scss/reset.scss'
 import 'src/assets/scss/Main.scss'
 import Container from './Container';
 import { RootReducerType } from 'src/modules';
-import { getUsersStart } from 'src/modules/users';
+import { getContentsStart } from 'src/modules/Contents';
 import Loading from 'src/components/Loadding';
 
 
@@ -31,10 +31,10 @@ const Main = () => {
   const [selectedFile, setSelectedFile] = useState<String | null>();
   const [contentDataList,setContentDataList]: [IPost[], (posts: IPost[]) => void] = useState(workContentList);
   const [workContentListId, setWorkContentListId] = useState<any>(0)
-  const state = useSelector((state: RootReducerType) => state.users);
+  const state = useSelector((state: RootReducerType) => state.contents);
   
   useEffect(() => {
-    dispatch(getUsersStart());
+    dispatch(getContentsStart());
   }, [dispatch]);
   console.log(state);
   const { loading, data, error } = state;
