@@ -7,7 +7,7 @@ import 'src/assets/scss/Main.scss'
 import Container from './Container';
 import { RootReducerType } from 'src/modules';
 import { getUsersStart } from 'src/modules/users';
-import Loadding from 'src/components/Loadding';
+import Loading from 'src/components/Loadding';
 
 
 const workContentList=[
@@ -18,25 +18,26 @@ const workContentList=[
   {id:uuid(),title:"메가스터디 초등수학 3-1",img:"elementary-math.svg"}, 
   {id:uuid(),title:"고등학교 수학 나",img:"higher-mathematics.svg"},
 ];
-
+interface IPost {
+  id: any;
+  title: string;
+  img: string;
+}
 const Main = () => {
   const history = useHistory();  
   const dispatch = useDispatch();
   const CreateFileRef = useRef<HTMLInputElement | null>(null);
   const UpdataFileRef = useRef<HTMLInputElement | null>(null);
   const [selectedFile, setSelectedFile] = useState<String | null>();
-  const [contentDataList,setContentDataList] = useState(workContentList);
+  const [contentDataList,setContentDataList]: [IPost[], (posts: IPost[]) => void] = useState(workContentList);
   const [workContentListId, setWorkContentListId] = useState<any>(0)
-  
   const state = useSelector((state: RootReducerType) => state.users);
-  console.log(state);
-
+  
   useEffect(() => {
     dispatch(getUsersStart());
   }, [dispatch]);
-
+  console.log(state);
   const { loading, data, error } = state;
-  
   
   
     const handleClickCreateFile = () =>{
@@ -53,7 +54,7 @@ const Main = () => {
     }
     ;
     //contentDataList.unshift(newContent)
-    setContentDataList(contentDataList => [...contentDataList,newContent]);
+    setContentDataList([...contentDataList,newContent]);
     console.log(contentDataList);
     //TODO 서버 GET content생성 + 이미지 추가
   };
@@ -108,6 +109,16 @@ const UpdataContentTitle =(e: any, id:any) => {
 const handleClickContent = (id:any) => {
   history.push(`/content/${id}`)
 }
+if(loading) return ( 
+  <div className="Main">
+    <div className="sideBar">
+      <div className="list activate"><div className="img"></div>문제집</div>
+      <div className="list"> <div className="img"></div>문제집</div>
+    </div>
+    <div className="container"></div>
+    <Loading />
+    </div>
+    )
 
   return (
     <div className="Main">
@@ -115,16 +126,12 @@ const handleClickContent = (id:any) => {
           <div className="list activate"><div className="img"></div>문제집</div>
           <div className="list"> <div className="img"></div>문제집</div>
       </div>
-      {true ? 
-      <>
-        <div className="container"></div>
-       <Loadding />
-       </>: 
+     
        <div className="container">
         <div className="container-card"><div className="plus" onClick={handleClickCreateFile}></div>
         <input type="file" name="CreateFile" ref={CreateFileRef}  accept=".svg, .jpg, .png, .pdf" onChange={CreateContent}/>
         </div>
-            {contentDataList.map((item,index) =>{
+            {data?.map((item,index) =>{
                 return(
                     <Container 
                     item={item}
@@ -143,7 +150,7 @@ const handleClickContent = (id:any) => {
             )}
            <input type="file" name="CreateFile" ref={UpdataFileRef}  accept=".svg, .jpg, .png, .pdf" onChange={UpdataContentImage}/>
        </div>
-       }
+       
       
       
     </div>

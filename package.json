@@ -16,6 +16,7 @@
     "@types/redux-actions": "^2.6.1",
     "axios": "^0.21.4",
     "craco-plugin-scoped-css": "^1.1.1",
+    "env-cmd": "^10.1.0",
     "g": "^2.0.1",
     "js-cookie": "^3.0.0",
     "node-sass": "^6.0.0",
@@ -43,8 +44,8 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "set PORT=8080 && craco start",
-    "build": "craco build",
+    "start": "env-cmd -f .env craco start",
+    "build": "env-cmd -f .env.production craco build",
     "test": "craco test",
     "eject": "craco eject",
     "server": "json-server --watch db.json --port 3001"

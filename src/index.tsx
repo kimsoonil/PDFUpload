@@ -19,11 +19,9 @@ const store = createStore(
 sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
-  <React.StrictMode>
     <Provider store={store}>
     <Routes />
-    </Provider>
-  </React.StrictMode>,
+    </Provider>,
   document.getElementById('root')
 );
 reportWebVitals();

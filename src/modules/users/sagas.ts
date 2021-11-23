@@ -3,7 +3,8 @@ import axios, { AxiosResponse } from 'axios';
 import { getUsersSuccess, getUsersError, GET_USERS_START } from './actions';
 
 function* getUsers () {
-  const users: AxiosResponse = yield call(() => axios.get('http://localhost:3001/workContentList'));
+  const REACT_APP_BASIC_URI : string = (process.env.REACT_APP_BASIC_URI as string);
+  const users: AxiosResponse = yield call(() => axios.get(REACT_APP_BASIC_URI));
   try {
     yield put(getUsersSuccess(users.data));
   } catch(e) {

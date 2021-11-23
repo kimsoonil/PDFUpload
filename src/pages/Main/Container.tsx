@@ -4,7 +4,7 @@ import 'src/assets/scss/reset.scss'
 import 'src/assets/scss/Main.scss'
 
 interface Props{
-    item:{id?:string, title:string, img:string};
+    item
     index:number
     handleClickContent
     handleClickUpdataFile
