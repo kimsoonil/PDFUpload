@@ -7,6 +7,7 @@ import 'src/assets/scss/Main.scss'
 import Container from './Container';
 import { RootReducerType } from 'src/modules';
 import { getUsersStart } from 'src/modules/users';
+import Loadding from 'src/components/Loadding';
 
 
 const workContentList=[
@@ -108,39 +109,43 @@ const handleClickContent = (id:any) => {
   history.push(`/content/${id}`)
 }
 
-if (loading) {
-  return <div>Loading...</div>;
-}
-
   return (
     <div className="Main">
       <div className="sideBar">
           <div className="list activate"><div className="img"></div>문제집</div>
           <div className="list"> <div className="img"></div>문제집</div>
       </div>
-      <div className="container">
-      <div className="container-card"><div className="plus" onClick={handleClickCreateFile}></div>
-      <input type="file" name="CreateFile" ref={CreateFileRef}  accept=".svg, .jpg, .png, .pdf" onChange={CreateContent}/>
-      </div>
-          {contentDataList.map((item,index) =>{
-              return(
-                 <Container 
-                 item={item}
-                 index={index}
-                 handleClickContent={(e) => handleClickContent(e)}
-                 handleClickUpdataFile={handleClickUpdataFile} 
-                 UpdataFileRef={UpdataFileRef}
-                 UpdataContentImage={UpdataContentImage}
-                 removeContent={removeContent}
-                 key={index}
-                 UpdataContentTitle={UpdataContentTitle}
-                 />
-                 
-              ) 
-          }
-          )}
-          <input type="file" name="CreateFile" ref={UpdataFileRef}  accept=".svg, .jpg, .png, .pdf" onChange={UpdataContentImage}/>
-      </div>
+      {true ? 
+      <>
+        <div className="container"></div>
+       <Loadding />
+       </>: 
+       <div className="container">
+        <div className="container-card"><div className="plus" onClick={handleClickCreateFile}></div>
+        <input type="file" name="CreateFile" ref={CreateFileRef}  accept=".svg, .jpg, .png, .pdf" onChange={CreateContent}/>
+        </div>
+            {contentDataList.map((item,index) =>{
+                return(
+                    <Container 
+                    item={item}
+                    index={index}
+                    handleClickContent={(e) => handleClickContent(e)}
+                    handleClickUpdataFile={handleClickUpdataFile} 
+                    UpdataFileRef={UpdataFileRef}
+                    UpdataContentImage={UpdataContentImage}
+                    removeContent={removeContent}
+                    key={index}
+                    UpdataContentTitle={UpdataContentTitle}
+                    />
+                    
+                ) 
+            }
+            )}
+           <input type="file" name="CreateFile" ref={UpdataFileRef}  accept=".svg, .jpg, .png, .pdf" onChange={UpdataContentImage}/>
+       </div>
+       }
+      
+      
     </div>
   );
 };
