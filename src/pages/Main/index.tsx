@@ -6,7 +6,7 @@ import 'src/assets/scss/reset.scss'
 import 'src/assets/scss/Main.scss'
 import Container from './Container';
 import { RootReducerType } from 'src/modules';
-import { getContentsStart } from 'src/modules/Contents';
+import { getBooksStart } from 'src/modules/Books';
 import Loading from 'src/components/Loadding';
 
 
@@ -34,7 +34,7 @@ const Main = () => {
   const state = useSelector((state: RootReducerType) => state.contents);
   
   useEffect(() => {
-    dispatch(getContentsStart());
+    dispatch(getBooksStart());
   }, [dispatch]);
   console.log(state);
   const { loading, data, error } = state;

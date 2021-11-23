@@ -1,5 +1,5 @@
 {
-  "workContentList":[
+  "books":[
   {
     "id": "1",
     "title": "",
@@ -24,8 +24,8 @@
     "id": "5",
     "title": "메가스터디 초등수학 3-1",
     "img": "elementary-math.svg"
-  },
-  {
+  }
+  ,{
     "id": "6",
     "title": "고등학교 수학 나",
     "img": "higher-mathematics.svg"

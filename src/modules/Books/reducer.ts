@@ -1,15 +1,15 @@
 import {
-  GetContentsActionsType,
-  GET_CONTENTS_START,
-  GET_CONTENTS_SUCCESS,
-  GET_CONTENTS_ERROR
+  GetBooksActionsType,
+  GET_BOOKS_START,
+  GET_BOOKS_SUCCESS,
+  GET_BOOKS_ERROR
 } from './actions';
-import { ContentsType } from './types';
+import { BooksType } from './types';
 import { AxiosError } from 'axios';
 
 type State = {
   loading: boolean;
-  data: ContentsType[] | null;
+  data: BooksType[] | null;
   error: AxiosError | null;
 };
 
@@ -21,21 +21,21 @@ const initiaState = {
 
 export default function users(
   state: State = initiaState,
-  action: GetContentsActionsType
+  action: GetBooksActionsType
 ): State {
   switch (action.type) {
-    case GET_CONTENTS_START:
+    case GET_BOOKS_START:
       return {
         ...state,
         loading: true
       };
-    case GET_CONTENTS_SUCCESS:
+    case GET_BOOKS_SUCCESS:
       return {
         ...state,
         loading: false,
         data: action.payload
       }
-    case GET_CONTENTS_ERROR:
+    case GET_BOOKS_ERROR:
       return {
         ...state,
         loading: false,

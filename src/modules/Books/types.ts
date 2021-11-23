@@ -4,7 +4,7 @@
 //
 //   "Set quicktype target language"
 
-export type ContentsType = {
+export type BooksType = {
   id:       any;
   title:    string;
   img:      string;

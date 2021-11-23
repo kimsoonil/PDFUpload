@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import contents, { getContentsSaga } from './Contents';
+import contents, { getBooksSaga } from './Books';
 import { all } from 'redux-saga/effects';
 
 const rootReducer = combineReducers({
@@ -7,7 +7,7 @@ const rootReducer = combineReducers({
 });
 
 export function* rootSaga() {
-  yield all([getContentsSaga()]);
+  yield all([getBooksSaga()]);
 }
 
 export type RootReducerType = ReturnType<typeof rootReducer>;
