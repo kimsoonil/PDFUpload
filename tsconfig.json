@@ -26,6 +26,7 @@
   "include": [
     "craco.config.js",
     "src",
-    "public/zwibbler.js"
+    "public/zwibbler.js",
+    "\broutes.tsx"
   ]
 }

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import 'src/assets/scss/reset.scss'
-import 'src/assets/scss/Content.scss'
+import 'src/assets/scss/Pages.scss'
 import ZwibblerComponent from "src/components/zwibbler/ZwibblerComponent";
 import MovableList from "src/components/MovableList"
-const Content = () => {
+const Pages = () => {
   return (
     <div className="App">
       <ZwibblerComponent />
@@ -11,4 +11,4 @@ const Content = () => {
     </div>
   );
 };
-export default Content
+export default Pages
