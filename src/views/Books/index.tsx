@@ -8,6 +8,7 @@ import Container from './Container';
 import { RootReducerType } from 'src/modules';
 import { getBooksStart } from 'src/modules/Books';
 import Loading from 'src/components/Loading';
+import Modal from 'src/components/Modal';
 interface IPost {
   id: any;
   title: string;
@@ -21,6 +22,7 @@ const Books = () => {
   const [selectedFile, setSelectedFile] = useState<String | null>();
   const [workBooksListId, setWorkBooksListId] = useState<any>(0)
   const state = useSelector((state: RootReducerType) => state.contents);
+  const [isOpen, setIsOpen] = useState(false)
   
   useEffect(() => {
     dispatch(getBooksStart());
@@ -74,8 +76,10 @@ const Books = () => {
   //TODO BOOK DELETE
   const removeBook = (e:any ,index:number) =>{
     e.stopPropagation();
-    const isRemoveBooks = window.confirm("정말 삭제하시겠습니까?");
-    if(!isRemoveBooks) return;
+    console.log()
+    handleModalOpen()
+    // const isRemoveBooks = window.confirm("정말 삭제하시겠습니까?");
+    // if(!isRemoveBooks) return;
     // let clone = [...contentDataList]
     // clone.splice(index, 1)
     // setBooksDataList(clone);
@@ -97,6 +101,14 @@ const Books = () => {
   const handleClickBook = (id:any) => {
     history.push(`/books/pages/${id}`);
   }
+
+  const handleModalOpen = () => {
+    setIsOpen(true);
+  }
+  const handleModalClose = () =>{
+    setIsOpen(false);
+  }
+
   if(loading) return ( 
   <div className="Main">
     <div className="sideBar">
@@ -137,9 +149,7 @@ const Books = () => {
             )}
            <input type="file" name="CreateFile" ref={UpdataFileRef}  accept=".svg, .jpg, .png, .pdf" onChange={UpdataBookImage}/>
        </div>
-       
-      
-      
+       <Modal title="문제집 삭제" content="데이터가 모두 삭제 됩니다." isOpen={isOpen} handleModalClose={handleModalClose}/>
     </div>
   );
 };
