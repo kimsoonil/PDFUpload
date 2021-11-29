@@ -1,8 +1,14 @@
 import {
   GetBooksActionsType,
-  GET_BOOKS_START,
-  GET_BOOKS_SUCCESS,
-  GET_BOOKS_ERROR
+  BOOK_PAGE_INIT,
+  BOOK_ERROR,
+  BOOK_SUCCESS,
+  BOOK_DETAIL_INIT,
+  BOOK_DETAIL_ERROR,
+  BOOK_DETAIL_SUCCESS,
+  BOOK_DETAIL_CLOSE,
+  BOOK_DELETE_ERROR,
+  BOOK_DELETE_SUCCESS,
 } from './actions';
 import { BooksType } from './types';
 import { AxiosError } from 'axios';
@@ -24,22 +30,56 @@ export default function users(
   action: GetBooksActionsType
 ): State {
   switch (action.type) {
-    case GET_BOOKS_START:
+    case BOOK_PAGE_INIT:
       return {
         ...state,
         loading: true
       };
-    case GET_BOOKS_SUCCESS:
+    case BOOK_SUCCESS:
       return {
         ...state,
         loading: false,
         data: action.payload
       }
-    case GET_BOOKS_ERROR:
+    case BOOK_ERROR:
       return {
         ...state,
         loading: false,
-        error: action.payload
+        error: action.error
+      }
+      case BOOK_DETAIL_INIT:
+      return {
+        ...state,
+        loading: true
+      };
+    case BOOK_DETAIL_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: action.payload
+      }
+    case BOOK_DETAIL_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.error
+      }
+      case BOOK_DETAIL_CLOSE:
+      return {
+        ...state,
+        loading: true
+      };
+    case BOOK_DELETE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: action.payload
+      }
+    case BOOK_DELETE_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.error
       }
     default:
       return state;
