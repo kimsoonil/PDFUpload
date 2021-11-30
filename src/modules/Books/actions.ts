@@ -1,6 +1,6 @@
 export const BOOK_PAGE_INIT = 'BOOK_PAGE_INIT' as const;
 export const BOOK_ERROR = 'BOOK_ERROR' as const;
-export const BOOK_SUCCESS = 'BOOK_SUCCESS'as const;
+export const BOOK_SUCCESS = 'BOOK_SUCCESS' as const;
 export const BOOK_CREATE_INIT = 'BOOK_CREATE_INIT' as const;
 export const BOOK_CREATE_SUCCESS = 'BOOK_CREATE_SUCCESS' as const;
 export const BOOK_CREATE_ERROR = 'BOOK_CREATE_ERROR' as const;

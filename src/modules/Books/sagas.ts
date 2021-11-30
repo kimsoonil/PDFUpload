@@ -1,73 +1,60 @@
 import { put, all, call, takeLatest } from 'redux-saga/effects';
 import axios, { AxiosResponse } from 'axios';
-import {
-  BOOK_PAGE_INIT,
-  BOOK_CREATE_INIT,
-  BOOK_UPDATE_INIT,
-  BOOK_DELETE_INIT,
-  bookError,
-  bookSuccess,
-  bookUpdateError,
-  bookUpdateSuccess,
-  bookDeleteError,
-  bookDeleteSuccess,
-  bookCreateSuccess,
-  bookCreateError,
-  bookPageInit
-} from "./actions";
+import  * as actionTypes from './actions';
 import { BooksAPI } from './api'
 
 const apiEndpoint = "http://localhost:3001/books";
+const REACT_APP_BASIC_URI : string = (process.env.REACT_APP_BASIC_URI as string);
 function* getBooks () {
-    yield put(bookPageInit());
-    try {
-    const response = yield call(axios.get, apiEndpoint);
-    console.log(response);
-    yield put(bookSuccess(response.data));
+     try {
+    const books: AxiosResponse = yield call(() => axios.get(REACT_APP_BASIC_URI));
+    yield put(actionTypes.bookSuccess(books.data));
   } catch(err:any) {
-    yield put(bookError(err));
+    yield put(actionTypes.bookError(err));
   }
 }
 
 function* bookCreateWorker({ payload }) {
+  yield put(actionTypes.bookPageInit());
   try {
-    yield call(axios.post, `${apiEndpoint}`,payload);
+    const createBook: AxiosResponse = yield call(() => axios.post(REACT_APP_BASIC_URI,payload));
+    console.log(createBook)
+    yield put(actionTypes.bookCreateSuccess(createBook.data));
   } catch (err:any) {
-    yield put(bookCreateError(err.response.data));
+    yield put(actionTypes.bookCreateError(err.response.data));
   }
 }
 
 function* bookUpdateWorker(payload) {
-  yield put(bookPageInit());
+  yield put(actionTypes.bookUpdateInit(payload));
   try {
-    yield call(axios.put, `${apiEndpoint}/${payload.id}`,payload);
-    yield put(bookUpdateSuccess(payload.id));
-    // let response = yield call(BooksAPI);
-    // yield put(bookSuccess(response));
+    const updataBook: AxiosResponse = yield call(() => axios.put(REACT_APP_BASIC_URI,payload));
+    console.log(updataBook)
+    yield put(actionTypes.bookUpdateSuccess(updataBook.data));
   } catch (err:any) {
-    yield put(bookUpdateError(err));
+    yield put(actionTypes.bookUpdateError(err));
   }
 }
 
 function* bookDeleteWorker(payload) {
-  yield put(bookPageInit());
+  yield put(actionTypes.bookDeleteInit(payload));
   try {
-    yield call(axios.delete, `${apiEndpoint}/${payload.id}`);
-    yield put(bookUpdateSuccess(payload));
-    let response = yield call(BooksAPI);
-    yield put(bookSuccess(response));
+    const deleteBook: AxiosResponse = yield call(() => axios.delete(REACT_APP_BASIC_URI,payload));
+    console.log(deleteBook)
+    yield put(actionTypes.bookUpdateSuccess(deleteBook.data));
   } catch (err:any) {
-    yield put(bookDeleteError(err));
+    yield put(actionTypes.bookDeleteError(err));
   }
 }
 
 export function* getBooksSaga() {
   // yield takeEvery(BOOK_PAGE_INIT, getBooks),
   yield all([
-    takeLatest(BOOK_PAGE_INIT, getBooks),
-    takeLatest(BOOK_CREATE_INIT, bookUpdateWorker),
-    takeLatest(BOOK_UPDATE_INIT, bookUpdateWorker),
-    takeLatest(BOOK_DELETE_INIT, bookDeleteWorker),
+    takeLatest(actionTypes.BOOK_PAGE_INIT , getBooks),
+    takeLatest(actionTypes.BOOK_CREATE_INIT as any, bookCreateWorker), 
+    // 타입 오버라이딩 에러로 any 타입 삽입
+    takeLatest(actionTypes.BOOK_UPDATE_INIT , bookUpdateWorker),
+    takeLatest(actionTypes.BOOK_DELETE_INIT , bookDeleteWorker),
     
   ]); 
 }
