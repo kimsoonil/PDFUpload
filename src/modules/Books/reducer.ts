@@ -1,15 +1,4 @@
-import {
-  GetBooksActionsType,
-  BOOK_PAGE_INIT,
-  BOOK_ERROR,
-  BOOK_SUCCESS,
-  BOOK_DETAIL_INIT,
-  BOOK_DETAIL_ERROR,
-  BOOK_DETAIL_SUCCESS,
-  BOOK_DETAIL_CLOSE,
-  BOOK_DELETE_ERROR,
-  BOOK_DELETE_SUCCESS,
-} from './actions';
+import  * as actionTypes from './actions';
 import { BooksType } from './types';
 import { AxiosError } from 'axios';
 
@@ -27,55 +16,73 @@ const initiaState = {
 
 export default function users(
   state: State = initiaState,
-  action: GetBooksActionsType
+  action: actionTypes.GetBooksActionsType
 ): State {
   switch (action.type) {
-    case BOOK_PAGE_INIT:
+    case actionTypes.BOOK_PAGE_INIT:
       return {
         ...state,
         loading: true
       };
-    case BOOK_SUCCESS:
+    case actionTypes.BOOK_SUCCESS:
       return {
         ...state,
         loading: false,
         data: action.payload
       }
-    case BOOK_ERROR:
+    case actionTypes.BOOK_ERROR:
       return {
         ...state,
         loading: false,
         error: action.error
       }
-      case BOOK_DETAIL_INIT:
+      case actionTypes.BOOK_CREATE_INIT:
+        return {
+          ...state,
+          loading: true,
+        }
+      case actionTypes.BOOK_CREATE_SUCCESS:
+        return {
+          ...state,
+          loading: false,
+          data: action.payload
+        }
+      case actionTypes.BOOK_CREATE_ERROR:
+        return {
+          ...state,
+          loading: false,
+          error: action.error
+        }   
+    case actionTypes.BOOK_UPDATE_INIT:
       return {
         ...state,
-        loading: true
-      };
-    case BOOK_DETAIL_SUCCESS:
+        loading: true,
+        
+      }
+    case actionTypes.BOOK_UPDATE_SUCCESS:
       return {
         ...state,
         loading: false,
         data: action.payload
       }
-    case BOOK_DETAIL_ERROR:
+    case actionTypes.BOOK_UPDATE_ERROR:
       return {
         ...state,
         loading: false,
         error: action.error
       }
-      case BOOK_DETAIL_CLOSE:
-      return {
-        ...state,
-        loading: true
-      };
-    case BOOK_DELETE_SUCCESS:
+      case actionTypes.BOOK_DELETE_INIT:
+        return {
+          ...state,
+          loading: true,
+        }  
+    case actionTypes.BOOK_DELETE_SUCCESS:
       return {
         ...state,
         loading: false,
         data: action.payload
       }
-    case BOOK_DELETE_ERROR:
+    case actionTypes.BOOK_DELETE_ERROR:
       return {
         ...state,
         loading: false,

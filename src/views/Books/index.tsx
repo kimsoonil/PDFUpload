@@ -1,12 +1,12 @@
 import React, {useRef,useState,useEffect,useCallback, useMemo} from 'react'
 import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch,connect } from 'react-redux';
 import uuid from "react-uuid"
 import 'src/assets/scss/reset.scss'
 import 'src/assets/scss/Books.scss'
 import Container from './Container';
 import { RootReducerType } from 'src/modules';
-import { getBooksStart } from 'src/modules/Books';
+import { bookPageInit,bookCreateInit,bookUpdateInit,bookDeleteInit } from 'src/modules/Books';
 import Loading from 'src/components/Loading';
 import Modal from 'src/components/Modal';
 interface IPost {
@@ -22,10 +22,11 @@ const Books = () => {
   const [selectedFile, setSelectedFile] = useState<String | null>();
   const [workBooksListId, setWorkBooksListId] = useState<any>(0)
   const state = useSelector((state: RootReducerType) => state.contents);
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const [modalId,setModalId] = useState<String | null>();
   
   useEffect(() => {
-    dispatch(getBooksStart());
+    dispatch(bookPageInit());
   }, [dispatch]);
   console.log(state);
   const { loading, data, error } = state;
@@ -74,16 +75,15 @@ const Books = () => {
   
   };
   //TODO BOOK DELETE
-  const removeBook = (e:any ,index:number) =>{
+  const bookDeeteModal = (e:any, id:any) =>{
     e.stopPropagation();
-    console.log()
     handleModalOpen()
-    // const isRemoveBooks = window.confirm("정말 삭제하시겠습니까?");
-    // if(!isRemoveBooks) return;
-    // let clone = [...contentDataList]
-    // clone.splice(index, 1)
-    // setBooksDataList(clone);
     //TODO 서버 DELETE
+
+  }
+  const bookDeete = (id:any) =>{
+    setIsOpen(false);
+    dispatch(bookDeleteInit(id))
   }
   //TODO BOOK title updata
   const UpdataBooksTitle =(e: any, id:any) => {
@@ -139,7 +139,7 @@ const Books = () => {
                     handleClickBook={(e) => handleClickBook(e)}
                     handleClickUpdataFile={handleClickUpdataFile} 
                     UpdataFileRef={UpdataFileRef}
-                    removeBook={removeBook}
+                    bookDeeteModal={bookDeeteModal}
                     key={index}
                     UpdataBooksTitle={UpdataBooksTitle}
                     />
@@ -149,10 +149,10 @@ const Books = () => {
             )}
            <input type="file" name="CreateFile" ref={UpdataFileRef}  accept=".svg, .jpg, .png, .pdf" onChange={UpdataBookImage}/>
        </div>
-       <Modal title="문제집 삭제" content="데이터가 모두 삭제 됩니다." isOpen={isOpen} handleModalClose={handleModalClose}/>
+       <Modal title="문제집 삭제" content="데이터가 모두 삭제 됩니다." isOpen={isOpen} handleModalClose={handleModalClose} bookDeete={bookDeete} />
     </div>
   );
 };
 
 
-export default Books 
+export default (Books)

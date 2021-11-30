@@ -9,7 +9,7 @@ interface Props{
     handleClickBook
     handleClickUpdataFile
     UpdataFileRef
-    removeBook
+    bookDeeteModal
     UpdataBooksTitle
 }
 
@@ -32,7 +32,7 @@ const Container: React.FC<Props> = (props: Props) =>{
                             <img src={require("src/images/main/photo.svg").default} alt="icon-poto" />
                             
                         </div>
-                        <div className="delete" onClick={(e => props.removeBook(e,props.index))}>
+                        <div className="delete" onClick={(e => props.bookDeeteModal(e,props.item.id))}>
                             <img src={require("src/images/main/trash.png").default} alt="icon-poto" />
                         </div>
                     </div>    

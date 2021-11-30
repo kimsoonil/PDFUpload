@@ -1,13 +1,16 @@
 export const BOOK_PAGE_INIT = 'BOOK_PAGE_INIT' as const;
 export const BOOK_ERROR = 'BOOK_ERROR' as const;
 export const BOOK_SUCCESS = 'BOOK_SUCCESS'as const;
-export const BOOK_DETAIL_INIT = 'BOOK_DETAIL_INIT' as const;
-export const BOOK_DETAIL_ERROR = 'BOOK_DETAIL_ERROR' as const;
-export const BOOK_DETAIL_SUCCESS = 'BOOK_DETAIL_SUCCESS' as const;
-export const BOOK_DETAIL_CLOSE = 'BOOK_DETAIL_CLOSE' as const;
+export const BOOK_CREATE_INIT = 'BOOK_CREATE_INIT' as const;
+export const BOOK_CREATE_SUCCESS = 'BOOK_CREATE_SUCCESS' as const;
+export const BOOK_CREATE_ERROR = 'BOOK_CREATE_ERROR' as const;
+export const BOOK_UPDATE_INIT = 'BOOK_UPDATE_INIT' as const;
+export const BOOK_UPDATE_ERROR = 'BOOK_UPDATE_ERROR' as const;
+export const BOOK_UPDATE_SUCCESS = 'BOOK_UPDATE_SUCCESS' as const;
 export const BOOK_DELETE_INIT = 'BOOK_DELETE_INIT' as const;
 export const BOOK_DELETE_ERROR = 'BOOK_DELETE_ERROR' as const;
 export const BOOK_DELETE_SUCCESS = 'BOOK_DELETE_SUCCESS' as const;
+
 
 export function bookPageInit() {
   return {
@@ -28,33 +31,46 @@ export function bookSuccess(payload) {
       payload
   };
 }
-export function bookDetailInit(id) {
+export function bookCreateInit(payload) {
   return {
-      type: BOOK_DETAIL_INIT,
-      id 
-  };
-}
-export function bookDetailError(error) {
-  return {
-      type: BOOK_DETAIL_ERROR,
-      error,
-  };
-}
-export function bookDetailSuccess(payload) {
-  return {
-      type: BOOK_DETAIL_SUCCESS,
+      type: BOOK_CREATE_INIT,
       payload
   };
 }
-export function bookDetailClose() {
+export function bookCreateError(error) {
   return {
-      type: BOOK_DETAIL_CLOSE,
+      type: BOOK_CREATE_ERROR,
+      error,
   };
 }
-export function bookDeleteInit(id) {
+export function bookCreateSuccess(payload) {
+  return {
+      type: BOOK_CREATE_SUCCESS,
+      payload
+  };
+}
+export function bookUpdateInit(payload) {
+  return {
+      type: BOOK_UPDATE_INIT,
+      payload
+  };
+}
+export function bookUpdateError(error) {
+  return {
+      type: BOOK_UPDATE_ERROR,
+      error,
+  };
+}
+export function bookUpdateSuccess(payload) {
+  return {
+      type: BOOK_UPDATE_SUCCESS,
+      payload
+  };
+}
+export function bookDeleteInit(payload) {
   return {
       type: BOOK_DELETE_INIT,
-      id 
+      payload
   };
 }
 export function bookDeleteError(error) {
@@ -73,10 +89,12 @@ export type GetBooksActionsType =
   | ReturnType<typeof bookPageInit>
   | ReturnType<typeof bookError>
   | ReturnType<typeof bookSuccess>
-  | ReturnType<typeof bookDetailInit>
-  | ReturnType<typeof bookDetailError>
-  | ReturnType<typeof bookDetailSuccess>
-  | ReturnType<typeof bookDetailClose>
+  | ReturnType<typeof bookCreateInit>
+  | ReturnType<typeof bookCreateSuccess>
+  | ReturnType<typeof bookCreateError>
+  | ReturnType<typeof bookUpdateInit>
+  | ReturnType<typeof bookUpdateError>
+  | ReturnType<typeof bookUpdateSuccess>
   | ReturnType<typeof bookDeleteInit>
   | ReturnType<typeof bookDeleteError>
   | ReturnType<typeof bookDeleteSuccess>

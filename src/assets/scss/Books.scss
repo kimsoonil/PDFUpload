@@ -3,6 +3,7 @@
 	display: flex;
 }
 .sideBar {
+	position: fixed;
 	width: 200px;
 	min-height: 100vh;
 	max-height: 100%;
@@ -54,6 +55,7 @@ input[type="file"] {
 	max-height: 100%;
 	background-color: #545861;
 	padding-left: 20px;
+	margin-left: 200px;
 	&-card {
 		width: 200px;
 		height: 326px;

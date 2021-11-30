@@ -69,6 +69,7 @@
     ]
   },
   "devDependencies": {
-    "craco-alias": "^3.0.1"
+    "craco-alias": "^3.0.1",
+    "sass": "^1.43.5"
   }
 }
