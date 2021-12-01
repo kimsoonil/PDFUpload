@@ -1,34 +1,46 @@
 {
-  "books":[
-  {
-    "id": "1",
-    "title": "",
-    "img": "mock-exam.svg"
-  },
-  {
-    "id": "2",
-    "title": "빠작2",
-    "img": "Chinese-literature.svg"
-  },
-  {
-    "id": "3",
-    "title": "한국 중학생 기출 문제집",
-    "img": "secondary-math.svg"
-  },
-  {
-    "id": "4",
-    "title": "너희들의 기출문제",
-    "img": "calculus.svg"
-  },
-  {
-    "id": "5",
-    "title": "메가스터디 초등수학 3-1",
-    "img": "elementary-math.svg"
-  }
-  ,{
-    "id": "6",
-    "title": "고등학교 수학 나",
-    "img": "higher-mathematics.svg"
-  }
-]
+  "books": [
+    {
+      "id": "1",
+      "sort": 1,
+      "title": "고등학교 수학 나",
+      "img": "higher-mathematics.svg"
+    },
+    {
+      "id": "2",
+      "sort": 2,
+      "title": "메가스터디 초등수학 3-1",
+      "img": "elementary-math.svg"
+    },
+    {
+      "id": "3",
+      "sort": 3,
+      "title": "너희들의 기출문제",
+      "img": "calculus.svg"
+    },
+    {
+      "id": "4",
+      "sort": 4,
+      "title": "한국 중학생 기출 문제집",
+      "img": "secondary-math.svg"
+    },
+    {
+      "id": "5",
+      "sort": 5,
+      "title": "빠작2",
+      "img": "Chinese-literature.svg"
+    },
+    {
+      "id": "6",
+      "sort": 6,
+      "title": "",
+      "img": "mock-exam.svg"
+    },
+    {
+      "id": "fa203-d4b5-53d1-878-22868d8dbf4",
+      "sort": 8,
+      "title": "",
+      "img": "calculus.svg"
+    }
+  ]
 }

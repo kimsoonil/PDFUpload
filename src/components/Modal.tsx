@@ -3,6 +3,7 @@ import 'src/assets/scss/reset.scss'
 import 'src/assets/scss/Components.scss'
 
 interface Props{
+    id: any
     title:string
     content:string
     isOpen:boolean 

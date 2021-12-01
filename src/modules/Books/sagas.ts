@@ -6,6 +6,7 @@ import { BooksAPI } from './api'
 const apiEndpoint = "http://localhost:3001/books";
 const REACT_APP_BASIC_URI : string = (process.env.REACT_APP_BASIC_URI as string);
 function* getBooks () {
+   yield put(actionTypes.bookPageInit());
      try {
     const books: AxiosResponse = yield call(() => axios.get(REACT_APP_BASIC_URI));
     yield put(actionTypes.bookSuccess(books.data));
@@ -15,33 +16,41 @@ function* getBooks () {
 }
 
 function* bookCreateWorker({ payload }) {
-  yield put(actionTypes.bookPageInit());
+  // yield put(actionTypes.bookPageInit());
   try {
     const createBook: AxiosResponse = yield call(() => axios.post(REACT_APP_BASIC_URI,payload));
     console.log(createBook)
-    yield put(actionTypes.bookCreateSuccess(createBook.data));
+    //yield put(actionTypes.bookCreateSuccess(createBook.data));
+    const books: AxiosResponse = yield call(() => axios.get(REACT_APP_BASIC_URI));
+    yield put(actionTypes.bookSuccess(books.data));
   } catch (err:any) {
     yield put(actionTypes.bookCreateError(err.response.data));
   }
 }
 
 function* bookUpdateWorker(payload) {
-  yield put(actionTypes.bookUpdateInit(payload));
+  // yield put(actionTypes.bookPageInit());
+  console.log(payload);
   try {
     const updataBook: AxiosResponse = yield call(() => axios.put(REACT_APP_BASIC_URI,payload));
-    console.log(updataBook)
+    
+    console.log(updataBook);
     yield put(actionTypes.bookUpdateSuccess(updataBook.data));
+    const books: AxiosResponse = yield call(() => axios.get(REACT_APP_BASIC_URI));
+    yield put(actionTypes.bookSuccess(books.data));
+    
   } catch (err:any) {
     yield put(actionTypes.bookUpdateError(err));
   }
 }
 
 function* bookDeleteWorker(payload) {
-  yield put(actionTypes.bookDeleteInit(payload));
+  //yield put(actionTypes.bookDeleteInit(payload));
   try {
     const deleteBook: AxiosResponse = yield call(() => axios.delete(REACT_APP_BASIC_URI,payload));
     console.log(deleteBook)
-    yield put(actionTypes.bookUpdateSuccess(deleteBook.data));
+    const books: AxiosResponse = yield call(() => axios.get(REACT_APP_BASIC_URI));
+    yield put(actionTypes.bookSuccess(books.data));
   } catch (err:any) {
     yield put(actionTypes.bookDeleteError(err));
   }
