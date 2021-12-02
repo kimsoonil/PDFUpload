@@ -6,7 +6,7 @@ interface Props{
     title:string
     content:string
     isOpen:boolean 
-    handleModalClose
+    handleDeleteModal
     bookDeete
 }
 
@@ -22,7 +22,7 @@ const Modal: React.FC<Props> = (props: Props) =>{
                 {props.content}
             </div>
             <div className="modal-actions">
-                <div className="modal-actions-close" onClick={props.handleModalClose}>취소</div>
+                <div className="modal-actions-close" onClick={props.handleDeleteModal}>취소</div>
                 <div className="modal-actions-confirm" onClick={props.bookDeete}>삭제</div>
             </div>
         </div>

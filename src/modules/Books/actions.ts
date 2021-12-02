@@ -98,4 +98,3 @@ export type GetBooksActionsType =
   | ReturnType<typeof bookDeleteInit>
   | ReturnType<typeof bookDeleteError>
   | ReturnType<typeof bookDeleteSuccess>
-

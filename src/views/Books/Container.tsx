@@ -10,8 +10,8 @@ interface Props{
     handleClickUpdataFile
     UpdataFileRef
     bookDeeteModal
-    UpdataBooksTitle
-    UpdateBooksTitleEnter
+    ChangeBooksTitle
+    KeyPressBooksTitle
 }
 
 const Container: React.FC<Props> = (props: Props) =>{
@@ -46,8 +46,8 @@ const Container: React.FC<Props> = (props: Props) =>{
             
             <div className="container-card-title" >
             {props.item.title !== "" ?
-            <input defaultValue= {props.item.title } onKeyPress={(e) => props.UpdateBooksTitleEnter(e, props.item.id)} onChange={(e) => props.UpdataBooksTitle(e)}/> :
-            <input placeholder= "책제목을 입력해주세요" onKeyPress={(e) => props.UpdateBooksTitleEnter(e, props.item.id)} onChange={(e) => props.UpdataBooksTitle(e)} />
+            <input defaultValue= {props.item.title } onKeyPress={(e) => props.KeyPressBooksTitle(e, props.item.id)} onChange={(e) => props.ChangeBooksTitle(e)}/> :
+            <input placeholder= "책제목을 입력해주세요" onKeyPress={(e) => props.KeyPressBooksTitle(e, props.item.id)} onChange={(e) => props.ChangeBooksTitle(e)} />
             }
             
             </div>

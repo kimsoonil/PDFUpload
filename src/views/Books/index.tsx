@@ -1,33 +1,49 @@
-import React, {useRef,useState,useEffect,useCallback, useMemo} from 'react'
+import React, {useRef,useState,useEffect,useCallback,useMemo} from 'react'
 import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch,connect } from 'react-redux';
-import uuid from "react-uuid"
+import { useSelector, useDispatch } from 'react-redux';
 import 'src/assets/scss/reset.scss'
 import 'src/assets/scss/Books.scss'
 import Container from './Container';
 import { RootReducerType } from 'src/modules';
 import { bookPageInit,bookCreateInit,bookUpdateInit,bookDeleteInit } from 'src/modules/Books';
 import Loading from 'src/components/Loading';
-import Modal from 'src/components/Modal';
+import DeleteModal from 'src/components/DeleteModal';
+import ErrorModal from 'src/components/ErrorModal'
 
 const Books = () => {
   const history = useHistory();  
   const dispatch = useDispatch();
   const CreateFileRef = useRef<HTMLInputElement | null>(null);
   const UpdataFileRef = useRef<HTMLInputElement | null>(null);
-  const [workBooksListId, setWorkBooksListId] = useState<String | null>();
-  const state = useSelector((state: RootReducerType) => state.contents);
-  const [isOpen, setIsOpen] = useState(false);
-  const [BookTitle, setBookTitle] = useState<String | null>();
+  const [workBooksListId, setWorkBooksListId] = useState<string | null>();
+  const BookState = useSelector((state: RootReducerType) => state.contents);
+  const [DeleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
+  const [BookTitle, setBookTitle] = useState<string | null>();
+  const [errorModal, setErrorModal] = useState({
+    open:false,
+    title:"",
+    content:""
+  });
+  
   useEffect(() => {
-    
     dispatch(bookPageInit());
-  }, [dispatch]);
+  }, [dispatch]); 
   
-  
-  const { loading, data, error } = state;
-  console.log(state.data?.results);
+  const { loading, data, error } = BookState;
+  // console.log(state.data?.results);
 
+  //TODO 서버에러
+  useEffect(()=>{
+    if(error){
+      setErrorModal({
+        ...errorModal,
+        open:true,
+        title:`${error.message}`,
+      })
+    };
+  },[]);
+
+  //TODO BOOK 생성 
   const handleClickCreateFile = () =>{
     if(!CreateFileRef.current) return;
     CreateFileRef.current.click();
@@ -35,7 +51,6 @@ const Books = () => {
   
   const CreateBook = (event) => {
     if(!event.target.files[0]) return;
-    
     const file = event.target.files[0];
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -49,7 +64,7 @@ const Books = () => {
     
   };
 
-  //TODO BOOK img updata
+  //TODO BOOK 이미지 변경
   const handleClickUpdataFile = useCallback((e: any, id:any) =>{
     e.stopPropagation();
      setWorkBooksListId(id)
@@ -59,7 +74,6 @@ const Books = () => {
   
   const UpdateBookImage = (event: any) => {
     if(!event.target.files[0]) return;
-    
     const file = event.target.files[0];
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -70,29 +84,14 @@ const Books = () => {
       };
       dispatch(bookUpdateInit(updateBook));
     }
-  
-  
   };
-  //TODO BOOK DELETE
-  const bookDeeteModal = (e:any, id:any) =>{
-    e.stopPropagation();
-    handleModalOpen()
-    setWorkBooksListId(id)
-  }
-  const bookDeete = (id:any) =>{
-    handleModalClose();
-    const deleteId = {
-      id:workBooksListId
-    }
-    dispatch(bookDeleteInit(deleteId));
-  }
 
-  //TODO BOOK title updata
-  const UpdataBooksTitle =(e: any) => {
+    //TODO BOOK 제목 변경
+    const ChangeBooksTitle =(e: any) => {
       setBookTitle(e.target.value);
   }
-  const UpdateBooksTitleEnter= (e:any, id:any)=>{
-    console.log("여기")
+  
+  const KeyPressBooksTitle= (e:any, id:any)=>{
     const updateBook={
       id:id,
       title:BookTitle
@@ -102,17 +101,37 @@ const Books = () => {
       dispatch(bookUpdateInit(updateBook));
     }
   }
+  
+  //TODO BOOK DELETE
+  const bookDeeteModal = (e:any, id:any) =>{
+    e.stopPropagation();
+    handleDeleteModal();
+    setWorkBooksListId(id);
+  }
+
+  const bookDeete = (id:any) =>{
+    handleDeleteModal();
+    const deleteId = {
+      id:workBooksListId
+    }
+    dispatch(bookDeleteInit(deleteId));
+  }
+
+
 
   //TODO Books 클릭시 페이지 이동
   const handleClickBook = (id:any) => {
     history.push(`/books/pages/${id}`);
   }
 
-  const handleModalOpen = () => {
-    setIsOpen(true);
+  const handleDeleteModal = () => {
+    setDeleteModalOpen(!DeleteModalOpen);
   }
-  const handleModalClose = () =>{
-    setIsOpen(false);
+  const handleErrorModal = () =>{
+    setErrorModal({
+      ...errorModal,
+      open:false,
+    })
   }
 
   if(loading) return ( 
@@ -125,7 +144,6 @@ const Books = () => {
     <Loading />
     </div>
     )
-    // data?.sort(function(a:any, b:any)  {return b.sort - a.sort;})
   return (
     <div className="Main">
       <div className="sideBar">
@@ -135,7 +153,7 @@ const Books = () => {
      
        <div className="container">
         <div className="container-card"><div className="plus" onClick={handleClickCreateFile}></div>
-        <input type="file" name="CreateFile" ref={CreateFileRef}  accept=".svg, .jpg, .png, .pdf" onChange={CreateBook}/>
+        <input type="file" name="CreateFile" ref={CreateFileRef}  accept=" .jpg, .jpeg, .png" onChange={CreateBook}/>
         </div>
             {data?.results?.map((item,index) =>{
                 return(
@@ -147,16 +165,26 @@ const Books = () => {
                     UpdataFileRef={UpdataFileRef}
                     bookDeeteModal={bookDeeteModal}
                     key={index}
-                    UpdataBooksTitle={UpdataBooksTitle}
-                    UpdateBooksTitleEnter={UpdateBooksTitleEnter}
+                    ChangeBooksTitle={ChangeBooksTitle}
+                    KeyPressBooksTitle={KeyPressBooksTitle}
                     />
                     
                 ) 
             }
             )}
-           <input type="file" name="UpdateFile" ref={UpdataFileRef}  accept=".svg, .jpg, .png, .pdf" onChange={UpdateBookImage}/>
+           <input type="file" name="UpdateFile" ref={UpdataFileRef}  accept=".jpg, .jpeg, .png" onChange={UpdateBookImage}/>
        </div>
-       <Modal title="문제집 삭제" content="데이터가 모두 삭제 됩니다." isOpen={isOpen} handleModalClose={handleModalClose} bookDeete={bookDeete} />
+       <DeleteModal 
+          title="문제집 삭제" 
+          content="데이터가 모두 삭제 됩니다." 
+          isOpen={DeleteModalOpen} 
+          handleDeleteModal={handleDeleteModal} 
+          bookDeete={bookDeete} 
+        />
+       <ErrorModal 
+          title={errorModal.title} 
+          errorModalOpen={errorModal.open} 
+          handleErrorModal={handleErrorModal}  />
     </div>
   );
 };

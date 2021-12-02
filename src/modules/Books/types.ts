@@ -5,14 +5,14 @@
 //   "Set quicktype target language"
 
 export type BooksType = {
-  code:    any
-  message: string
-  results: BooksResultsType
+  code:     number;
+  message:  string;
+  results:  BooksResultsType;
 }
 
 export type BooksResultsType = {
-  results: any
-  id:       any;
-  title:    string;
-  img:      string;
+  id:           any;
+  title:        string;
+  category:     string;
+  image_cover:  string;
 }

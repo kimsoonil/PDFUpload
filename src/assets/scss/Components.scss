@@ -25,7 +25,7 @@
 	align-items: center;
 	.modal {
 		width: 320px;
-		height: 190px;
+		min-height: 160px;
 		background-color: #fff;
 		border-radius: 10px;
 		display: flex;
@@ -46,27 +46,36 @@
 			font-size: 14px;
 			color: #9ea2a8;
 			margin-bottom: 36px;
+			padding: 0 20px;
 		}
 		&-actions {
 			display: flex;
 			justify-content: center;
 			align-items: center;
+			width: 320px;
 			div {
-				width: 160px;
 				height: 56px;
 				text-align: center;
 				line-height: 56px;
 				cursor: pointer;
 			}
 			&-close {
+				width: 160px;
 				color: #545861;
 				background: #eeeeee;
 				border-radius: 0px 0px 0px 10px;
 			}
 			&-confirm {
+				width: 160px;
 				color: #ffffff;
 				background: #111111;
 				border-radius: 0px 0px 10px 0px;
+			}
+			&-alert {
+				width: 320px;
+				color: #545861;
+				background: #eeeeee;
+				border-radius: 0px 0px 10px 10px;
 			}
 		}
 	}

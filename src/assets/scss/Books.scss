@@ -67,6 +67,7 @@ input[type="file"] {
 			width: 200px;
 			height: 285px;
 			object-fit: cover;
+			border-radius: 10px 10px 0 0;
 		}
 		&-shadow {
 			position: absolute;
