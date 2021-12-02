@@ -1,13 +1,11 @@
 import { put, all, call, takeLatest } from 'redux-saga/effects';
 import axios, { AxiosResponse } from 'axios';
 import  * as actionTypes from './actions';
-import { BooksAPI } from './api'
 
-const apiEndpoint = "http://localhost:3001/books";
-const REACT_APP_BASIC_URI : string = (process.env.REACT_APP_BASIC_URI as string);
+const REACT_APP_BASIC_URI : string = (`${process.env.REACT_APP_BASIC_URI}/books` as string);
 function* getBooks () {
-   yield put(actionTypes.bookPageInit());
-     try {
+  
+  try {
     const books: AxiosResponse = yield call(() => axios.get(REACT_APP_BASIC_URI));
     yield put(actionTypes.bookSuccess(books.data));
   } catch(err:any) {
@@ -16,8 +14,9 @@ function* getBooks () {
 }
 
 function* bookCreateWorker({ payload }) {
-  // yield put(actionTypes.bookPageInit());
+  
   try {
+    //  yield put(actionTypes.bookCreateInit(payload));
     const createBook: AxiosResponse = yield call(() => axios.post(REACT_APP_BASIC_URI,payload));
     console.log(createBook)
     //yield put(actionTypes.bookCreateSuccess(createBook.data));
@@ -29,11 +28,21 @@ function* bookCreateWorker({ payload }) {
 }
 
 function* bookUpdateWorker(payload) {
-  // yield put(actionTypes.bookPageInit());
-  console.log(payload);
+console.log(payload)
   try {
-    const updataBook: AxiosResponse = yield call(() => axios.put(REACT_APP_BASIC_URI,payload));
-    
+    // yield put(actionTypes.bookUpdateInit(payload));
+
+    let updateJson;
+    let parameter
+    if(payload.payload.image_cover){
+      updateJson={image_cover:payload.payload.image_cover}
+      parameter = "image-cover";
+      
+    }else if(payload.payload.title){
+      updateJson={title:payload.payload.title}
+      parameter = "title";
+    }
+    const updataBook: AxiosResponse = yield call(() => axios.patch(`${REACT_APP_BASIC_URI}/${payload.payload.id}/${parameter}`,updateJson));    
     console.log(updataBook);
     yield put(actionTypes.bookUpdateSuccess(updataBook.data));
     const books: AxiosResponse = yield call(() => axios.get(REACT_APP_BASIC_URI));
@@ -45,9 +54,11 @@ function* bookUpdateWorker(payload) {
 }
 
 function* bookDeleteWorker(payload) {
-  //yield put(actionTypes.bookDeleteInit(payload));
+  console.log(payload)
   try {
-    const deleteBook: AxiosResponse = yield call(() => axios.delete(REACT_APP_BASIC_URI,payload));
+    // yield put(actionTypes.bookDeleteInit(payload));
+    
+    const deleteBook: AxiosResponse = yield call(() => axios.delete(`${REACT_APP_BASIC_URI}/${payload.payload}`));
     console.log(deleteBook)
     const books: AxiosResponse = yield call(() => axios.get(REACT_APP_BASIC_URI));
     yield put(actionTypes.bookSuccess(books.data));

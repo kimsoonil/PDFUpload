@@ -4,7 +4,7 @@ import { AxiosError } from 'axios';
 
 type State = {
   loading: boolean;
-  data: BooksType[] | null;
+  data: {[key:string]:any} | null;
   error: AxiosError | null;
 };
 

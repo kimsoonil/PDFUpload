@@ -11,15 +11,20 @@ interface Props{
     UpdataFileRef
     bookDeeteModal
     UpdataBooksTitle
+    UpdateBooksTitleEnter
 }
 
 const Container: React.FC<Props> = (props: Props) =>{
+    
         let imgSrc ;
-        if(props.item.img.length < 50){
-        imgSrc = require(`src/images/main/${props.item.img}`).default
-        }else{
-          imgSrc = props.item.img
+        if(props.item.image_cover){
+            if(props.item.image_cover.length < 50){
+                imgSrc = require(`src/images/main/${props.item.img}`).default
+                }else{
+                  imgSrc = props.item.image_cover
+                }
         }
+        
         return(
         <div className="container-card" >
             <div >
@@ -41,8 +46,8 @@ const Container: React.FC<Props> = (props: Props) =>{
             
             <div className="container-card-title" >
             {props.item.title !== "" ?
-            <input defaultValue= {props.item.title } onChange={(e) => props.UpdataBooksTitle(e, props.item.id)}/> :
-            <input placeholder= "책제목을 입력해주세요" onChange={(e) => props.UpdataBooksTitle(e, props.item.id)} />
+            <input defaultValue= {props.item.title } onKeyPress={(e) => props.UpdateBooksTitleEnter(e, props.item.id)} onChange={(e) => props.UpdataBooksTitle(e)}/> :
+            <input placeholder= "책제목을 입력해주세요" onKeyPress={(e) => props.UpdateBooksTitleEnter(e, props.item.id)} onChange={(e) => props.UpdataBooksTitle(e)} />
             }
             
             </div>

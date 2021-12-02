@@ -15,38 +15,37 @@ const Books = () => {
   const dispatch = useDispatch();
   const CreateFileRef = useRef<HTMLInputElement | null>(null);
   const UpdataFileRef = useRef<HTMLInputElement | null>(null);
-  const [selectedFile, setSelectedFile] = useState<String | null>();
   const [workBooksListId, setWorkBooksListId] = useState<String | null>();
   const state = useSelector((state: RootReducerType) => state.contents);
   const [isOpen, setIsOpen] = useState(false);
-  const [modalId,setModalId] = useState<String | null>();
-  
+  const [BookTitle, setBookTitle] = useState<String | null>();
   useEffect(() => {
-    //getBooks()
+    
     dispatch(bookPageInit());
   }, [dispatch]);
-  console.log(state);
+  
+  
   const { loading, data, error } = state;
-    
-    const handleClickCreateFile = () =>{
-      if(!CreateFileRef.current) return;
-      CreateFileRef.current.click();
-    }
+  console.log(state.data?.results);
 
-    const CreateBook = (event) => {
-      if(!event.target.files[0].name) return;
-    console.log(event.target.files[0].name)
-    const dataLength = data?.length
+  const handleClickCreateFile = () =>{
+    if(!CreateFileRef.current) return;
+    CreateFileRef.current.click();
+  }
+  
+  const CreateBook = (event) => {
+    if(!event.target.files[0]) return;
+    
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
     const newBooks = {
-      id:uuid(),
-      sort:dataLength ? dataLength +1: dataLength,
-      title:"",
-      img:event.target.files[0].name
-    };
-    dispatch(bookCreateInit(newBooks));
-    //contentDataList.unshift(newBooks)
-    //setBooksDataList([...contentDataList,newBooks]);
-    //TODO 서버 CREATE BOOKS + img 추가
+        category:"WORKBOOK",
+        image_cover:reader.result
+      };
+      dispatch(bookCreateInit(newBooks));
+    }
     
   };
 
@@ -59,55 +58,49 @@ const Books = () => {
   },[]);
   
   const UpdateBookImage = (event: any) => {
-    if(!event.target.files[0].name) return;
-    let reader = new FileReader();
-    let file = event.target.files[0];
-    setSelectedFile(event.target.files[0].name);
-   
-      const updateBooks = {
-        id:workBooksListId,
-        img:event.target.files[0].name
-      };
-      console.log(updateBooks)
-      dispatch(bookUpdateInit(updateBooks));
-      
+    if(!event.target.files[0]) return;
     
-    //reader.onloadend = (e) => {
-      //TODO 서버 PUT BOOKS 이미지 변경
-     
-   // }
-    if(file)
-      reader.readAsDataURL(file);  
-   
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+    const updateBook = {
+        id:workBooksListId,
+        image_cover:reader.result
+      };
+      dispatch(bookUpdateInit(updateBook));
+    }
+  
   
   };
   //TODO BOOK DELETE
   const bookDeeteModal = (e:any, id:any) =>{
     e.stopPropagation();
     handleModalOpen()
-    setModalId(id)
+    setWorkBooksListId(id)
   }
   const bookDeete = (id:any) =>{
-    console.log("여기")
     handleModalClose();
-    dispatch(bookDeleteInit(id));
+    const deleteId = {
+      id:workBooksListId
+    }
+    dispatch(bookDeleteInit(deleteId));
   }
 
   //TODO BOOK title updata
-  const UpdataBooksTitle =(e: any, id:any) => {
-    const updateBooks = {
+  const UpdataBooksTitle =(e: any) => {
+      setBookTitle(e.target.value);
+  }
+  const UpdateBooksTitleEnter= (e:any, id:any)=>{
+    console.log("여기")
+    const updateBook={
       id:id,
-      title:e.target.value
-    };
-    console.log(updateBooks)
-    dispatch(bookUpdateInit(updateBooks));
-    //TODO 서버 PUT BOOKS title 변경
-    // setBooksDataList(
-    //   contentDataList.map(contentDataList => contentDataList.id === id ? {
-    //     ...contentDataList,
-    //     title:e.target.value
-    //   } :contentDataList)
-    //  ) 
+      title:BookTitle
+    }
+    console.log(e.key)
+    if(e.key === "Enter"){
+      dispatch(bookUpdateInit(updateBook));
+    }
   }
 
   //TODO Books 클릭시 페이지 이동
@@ -132,7 +125,7 @@ const Books = () => {
     <Loading />
     </div>
     )
-    data?.sort(function(a:any, b:any)  {return b.sort - a.sort;})
+    // data?.sort(function(a:any, b:any)  {return b.sort - a.sort;})
   return (
     <div className="Main">
       <div className="sideBar">
@@ -144,7 +137,7 @@ const Books = () => {
         <div className="container-card"><div className="plus" onClick={handleClickCreateFile}></div>
         <input type="file" name="CreateFile" ref={CreateFileRef}  accept=".svg, .jpg, .png, .pdf" onChange={CreateBook}/>
         </div>
-            {data?.map((item,index) =>{
+            {data?.results?.map((item,index) =>{
                 return(
                     <Container 
                     item={item}
@@ -155,6 +148,7 @@ const Books = () => {
                     bookDeeteModal={bookDeeteModal}
                     key={index}
                     UpdataBooksTitle={UpdataBooksTitle}
+                    UpdateBooksTitleEnter={UpdateBooksTitleEnter}
                     />
                     
                 ) 
@@ -162,7 +156,7 @@ const Books = () => {
             )}
            <input type="file" name="UpdateFile" ref={UpdataFileRef}  accept=".svg, .jpg, .png, .pdf" onChange={UpdateBookImage}/>
        </div>
-       <Modal id={modalId} title="문제집 삭제" content="데이터가 모두 삭제 됩니다." isOpen={isOpen} handleModalClose={handleModalClose} bookDeete={bookDeete} />
+       <Modal title="문제집 삭제" content="데이터가 모두 삭제 됩니다." isOpen={isOpen} handleModalClose={handleModalClose} bookDeete={bookDeete} />
     </div>
   );
 };
