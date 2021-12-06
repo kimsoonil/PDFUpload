@@ -18,6 +18,7 @@ const Books = () => {
   const UpdataFileRef = useRef<HTMLInputElement | null>(null);
   const [workBooksListId, setWorkBooksListId] = useState<string | null>();
   const BookState = useSelector((state: RootReducerType) => state.contents);
+  const [pageNumber, setPageNumber] = useState(1);
   const [DeleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
   const [BookTitle, setBookTitle] = useState<string | null>();
   const [errorModal, setErrorModal] = useState({
@@ -30,6 +31,28 @@ const Books = () => {
     dispatch(bookPageInit());
   }, [dispatch]); 
   
+  //TODO infinite scrolling
+  const handleScroll = () => {
+    const scrollHeight = document.documentElement.scrollHeight;
+    const scrollTop = document.documentElement.scrollTop;
+    const clientHeight = document.documentElement.clientHeight;
+    if (scrollTop + clientHeight >= scrollHeight) {
+      console.log(`pageNumber 업데이트  ${pageNumber}`);
+      // 페이지 끝에 도달하면 추가 데이터를 받아온다
+      dispatch(bookPageInit());
+      setPageNumber((pageNumber) => pageNumber + 1);
+    }
+  };
+
+  // useEffect(() => {
+  //   // scroll event listener 등록
+  //   window.addEventListener('scroll', handleScroll);
+  //   return () => {
+  //     // scroll event listener 해제
+  //     window.removeEventListener('scroll', handleScroll);
+  //   };
+  // }, [pageNumber, dispatch]);
+
   const { loading, data, error } = BookState;
   // console.log(state.data?.results);
 
@@ -135,16 +158,16 @@ const Books = () => {
     })
   }
 
-  if(loading) return ( 
-  <div className="Main">
-    <div className="sideBar">
-      <div className="list activate"><div className="img"></div>문제집</div>
-      <div className="list"> <div className="img"></div>문제집</div>
-    </div>
-    <div className="container"></div>
-    <Loading />
-    </div>
-    )
+  // if(loading) return ( 
+  // <div className="Main">
+  //   <div className="sideBar">
+  //     <div className="list activate"><div className="img"></div>문제집</div>
+  //     <div className="list"> <div className="img"></div>문제집</div>
+  //   </div>
+  //   <div className="container"></div>
+  //   <Loading />
+  //   </div>
+  //   )
   return (
     <div className="Main">
       <div className="sideBar">
@@ -186,7 +209,7 @@ const Books = () => {
           title={errorModal.title} 
           errorModalOpen={errorModal.open} 
           handleErrorModal={handleErrorModal}  />
-       {/* <SaveModal /> */}
+       <SaveModal />
     </div>
     
   );
