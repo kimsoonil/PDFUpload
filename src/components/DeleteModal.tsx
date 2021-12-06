@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import 'src/assets/scss/reset.scss'
 import 'src/assets/scss/Components.scss'
 
@@ -10,7 +10,7 @@ interface Props{
     bookDeete
 }
 
-const Modal: React.FC<Props> = (props: Props) =>{
+const DeleteModal: React.FC<Props> = (props: Props) =>{
    
   return (
     <div className="modal-shadow" style={{display :props.isOpen ? "flex" : "none"}}>
@@ -31,4 +31,4 @@ const Modal: React.FC<Props> = (props: Props) =>{
 };
 
 
-export default Modal 
+export default DeleteModal 

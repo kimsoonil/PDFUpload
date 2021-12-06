@@ -9,6 +9,7 @@ import { bookPageInit,bookCreateInit,bookUpdateInit,bookDeleteInit } from 'src/m
 import Loading from 'src/components/Loading';
 import DeleteModal from 'src/components/DeleteModal';
 import ErrorModal from 'src/components/ErrorModal'
+import SaveModal from 'src/components/SaveModal';
 
 const Books = () => {
   const history = useHistory();  
@@ -185,7 +186,9 @@ const Books = () => {
           title={errorModal.title} 
           errorModalOpen={errorModal.open} 
           handleErrorModal={handleErrorModal}  />
+       {/* <SaveModal /> */}
     </div>
+    
   );
 };
 

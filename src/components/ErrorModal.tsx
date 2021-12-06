@@ -8,7 +8,7 @@ interface Props{
     handleErrorModal
 }
 
-const Modal: React.FC<Props> = (props: Props) =>{
+const ErrorModal: React.FC<Props> = (props: Props) =>{
    
   return (
     <div className="modal-shadow" style={{display :props.errorModalOpen ? "flex" : "none"}}>
@@ -25,4 +25,4 @@ const Modal: React.FC<Props> = (props: Props) =>{
 };
 
 
-export default Modal 
+export default ErrorModal 

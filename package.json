@@ -24,6 +24,7 @@
     "react-awesome-swiper": "^1.4.16",
     "react-cookie": "^4.0.3",
     "react-dom": "^16.8.0",
+    "react-icons": "^4.3.1",
     "react-lottie": "^1.2.3",
     "react-lottie-hook": "^0.5.0",
     "react-movable": "^3.0.2",
