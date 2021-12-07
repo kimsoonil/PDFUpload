@@ -2,16 +2,19 @@ import  * as actionTypes from './actions';
 import { BooksType } from './types';
 import { AxiosError } from 'axios';
 
+
 type State = {
   loading: boolean;
   data: {[key:string]:any} | null;
   error: AxiosError | null;
+  length: number | null;
 };
 
 const initiaState = {
   loading: false,
   data: null,
-  error: null
+  error: null,
+  length: null,
 };
 
 export default function users(
@@ -22,13 +25,15 @@ export default function users(
     case actionTypes.BOOK_PAGE_INIT:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case actionTypes.BOOK_SUCCESS:
+      const { results } = action.payload;
       return {
         ...state,
         loading: false,
-        data: action.payload
+        data: results,
+        length: results.length
       }
     case actionTypes.BOOK_ERROR:
       return {
@@ -41,6 +46,16 @@ export default function users(
           ...state,
           loading: true,
         }
+      case actionTypes.DISPLAY_MORE_BEGIN:
+			return {
+				...state,
+				loading: true,
+			};
+		case actionTypes.DISPLAY_MORE_END:
+			return {
+				...state,
+				loading: false,
+			};
       case actionTypes.BOOK_CREATE_SUCCESS:
         return {
           ...state,

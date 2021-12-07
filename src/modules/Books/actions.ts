@@ -10,7 +10,8 @@ export const BOOK_UPDATE_SUCCESS = 'BOOK_UPDATE_SUCCESS' as const;
 export const BOOK_DELETE_INIT = 'BOOK_DELETE_INIT' as const;
 export const BOOK_DELETE_ERROR = 'BOOK_DELETE_ERROR' as const;
 export const BOOK_DELETE_SUCCESS = 'BOOK_DELETE_SUCCESS' as const;
-
+export const DISPLAY_MORE_BEGIN = 'BOOK_DELETE_SUCCESS' as const;
+export const DISPLAY_MORE_END = 'BOOK_DELETE_SUCCESS' as const;
 
 export function bookPageInit() {
   return {

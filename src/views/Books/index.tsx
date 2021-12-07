@@ -1,23 +1,31 @@
 import React, {useRef,useState,useEffect,useCallback,useMemo} from 'react'
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import 'src/assets/scss/reset.scss'
-import 'src/assets/scss/Books.scss'
-import Container from './Container';
 import { RootReducerType } from 'src/modules';
 import { bookPageInit,bookCreateInit,bookUpdateInit,bookDeleteInit } from 'src/modules/Books';
-import Loading from 'src/components/Loading';
+
+import Container from './Container';
 import DeleteModal from 'src/components/DeleteModal';
 import ErrorModal from 'src/components/ErrorModal'
 import SaveModal from 'src/components/SaveModal';
-
+import Loading from 'src/components/Loading';
+import _ from "lodash";
+import 'src/assets/scss/reset.scss'
+import 'src/assets/scss/Books.scss'
+interface Props{
+  id:           any;
+  title:        string;
+  category:     string;
+  image_cover:  string;
+}
 const Books = () => {
   const history = useHistory();  
   const dispatch = useDispatch();
   const CreateFileRef = useRef<HTMLInputElement | null>(null);
   const UpdataFileRef = useRef<HTMLInputElement | null>(null);
-  const [workBooksListId, setWorkBooksListId] = useState<string | null>();
   const BookState = useSelector((state: RootReducerType) => state.contents);
+  const [scrollLoading, setScrollLoading] = useState(false)
+  const [workBooksListId, setWorkBooksListId] = useState<string | null>();
   const [pageNumber, setPageNumber] = useState(1);
   const [DeleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
   const [BookTitle, setBookTitle] = useState<string | null>();
@@ -28,34 +36,52 @@ const Books = () => {
   });
   
   useEffect(() => {
-    dispatch(bookPageInit());
+    dispatch(bookPageInit());   
+    
   }, [dispatch]); 
-  
+
+  console.log(BookState);
+  const { loading, data, error, length } = BookState;
+  if( _.isEmpty(length)){
+    localStorage.setItem('length',String(length))
+  }
   //TODO infinite scrolling
   const handleScroll = () => {
     const scrollHeight = document.documentElement.scrollHeight;
     const scrollTop = document.documentElement.scrollTop;
     const clientHeight = document.documentElement.clientHeight;
+    
     if (scrollTop + clientHeight >= scrollHeight) {
-      console.log(`pageNumber 업데이트  ${pageNumber}`);
+      setScrollLoading(true);
       // 페이지 끝에 도달하면 추가 데이터를 받아온다
-      dispatch(bookPageInit());
-      setPageNumber((pageNumber) => pageNumber + 1);
-    }
+      const bookLength = localStorage.getItem('length');
+         if(pageNumber * 10 < Number(bookLength)){
+        if(data && !error){
+          dispatch(bookPageInit())
+        } 
+        setPageNumber((pageNumber) => pageNumber + 1);
+       }
+     
+      }
+      setTimeout(() =>{
+        setScrollLoading(false);
+      },1000)
+      
   };
 
-  // useEffect(() => {
-  //   // scroll event listener 등록
-  //   window.addEventListener('scroll', handleScroll);
-  //   return () => {
-  //     // scroll event listener 해제
-  //     window.removeEventListener('scroll', handleScroll);
-  //   };
-  // }, [pageNumber, dispatch]);
 
-  const { loading, data, error } = BookState;
-  // console.log(state.data?.results);
+  useEffect(() => {
+    
+    // scroll event listener 등록
+    window.addEventListener('scroll', handleScroll); 
+    return () => {
+      
+      // scroll event listener 해제
+      window.removeEventListener('scroll',handleScroll);
+    };
+  }, [pageNumber,dispatch]);
 
+  
   //TODO 서버에러
   useEffect(()=>{
     if(error){
@@ -65,7 +91,7 @@ const Books = () => {
         title:`${error.message}`,
       })
     };
-  },[]);
+  },[error]);
 
   //TODO BOOK 생성 
   const handleClickCreateFile = () =>{
@@ -120,7 +146,6 @@ const Books = () => {
       id:id,
       title:BookTitle
     }
-    console.log(e.key)
     if(e.key === "Enter"){
       dispatch(bookUpdateInit(updateBook));
     }
@@ -158,16 +183,18 @@ const Books = () => {
     })
   }
 
-  // if(loading) return ( 
-  // <div className="Main">
-  //   <div className="sideBar">
-  //     <div className="list activate"><div className="img"></div>문제집</div>
-  //     <div className="list"> <div className="img"></div>문제집</div>
-  //   </div>
-  //   <div className="container"></div>
-  //   <Loading />
-  //   </div>
-  //   )
+  if (
+    _.isEmpty(data) && loading) return ( 
+  <div className="Main">
+    <div className="sideBar">
+      <div className="list activate"><div className="img"></div>문제집</div>
+      <div className="list"> <div className="img"></div>문제집</div>
+    </div>
+    <div className="container"></div>
+    <Loading />
+    </div>
+    )
+    
   return (
     <div className="Main">
       <div className="sideBar">
@@ -179,7 +206,8 @@ const Books = () => {
         <div className="container-card"><div className="plus" onClick={handleClickCreateFile}></div>
         <input type="file" name="CreateFile" ref={CreateFileRef}  accept=" .jpg, .jpeg, .png" onChange={CreateBook}/>
         </div>
-            {data?.results?.map((item,index) =>{
+            {data?.map((item,index) =>{
+              if(index < pageNumber * 10)
                 return(
                     <Container 
                     item={item}
@@ -197,6 +225,9 @@ const Books = () => {
             }
             )}
            <input type="file" name="UpdateFile" ref={UpdataFileRef}  accept=".jpg, .jpeg, .png" onChange={UpdateBookImage}/>
+           {scrollLoading && (
+          <Loading />
+        )}
        </div>
        <DeleteModal 
           title="문제집 삭제" 
@@ -209,7 +240,7 @@ const Books = () => {
           title={errorModal.title} 
           errorModalOpen={errorModal.open} 
           handleErrorModal={handleErrorModal}  />
-       <SaveModal />
+       {/* <SaveModal /> */}
     </div>
     
   );

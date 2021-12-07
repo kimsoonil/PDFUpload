@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 import  * as actionTypes from './actions';
 
 const REACT_APP_BOOK_URI : string = (`${process.env.REACT_APP_BASIC_URI}books` as string);
-const token = "bfe887177ff7a6b9ad133efe3060c189956bcf5f";
+const token = "caaf6c899fb805cc8fee9804df2037d50e8d5136";
 const config = {
   headers: { Authorization: `Token ${token}` }
 }
