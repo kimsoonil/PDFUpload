@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState, useRef } from 'react';
 import "./Zwibbler.scss"
+
 const ZwibblerComponent = () => {
   let Zwibbler = window["Zwibbler"];
   const [ctx, createCtx] = useState<{ [key: string]: any }>({});
@@ -17,17 +18,20 @@ const ZwibblerComponent = () => {
       showLineTool: false,
       showCopyPaste: false,
       showUndoRedo: false,
-      showtoolbar: true
+      showtoolbar: false
     }));
     console.log(ctx);
   }, [])
   return (
     <div
-      id="zwibbler"
-      className="zwibbler"
-      style={{ width: "calc(100% - 200px)", height: "100%", display: "inline-block" }}
-    ></div>
-
+    id="zwibbler"
+    className="zwibbler"
+    style={{ width: "calc(100% - 200px)", height: "100%", display: "inline-block" }}
+  > 
+   <div>
+      <button z-click="openpdf()">Open PDF file</button>
+    </div>
+  </div>
   )
 }
 export default ZwibblerComponent

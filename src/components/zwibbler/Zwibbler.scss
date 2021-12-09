@@ -1,7 +1,27 @@
+/** @format */
+
 .zwibbler {
-  background: #ccc;
-  .zwibbler-builtin-toolbar {
-    background: #eee;
-    width: 240px;
-  }
+	background: #545861;
+	.zwibbler-canvas-holder {
+	}
+	.zwibbler-builtin-toolbar {
+		background: #373c47;
+		width: 240px;
+		display: flex;
+		button {
+			width: 36px;
+			height: 36px;
+			background-color: #545861;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			&:hover {
+				background-color: #0bcea5;
+			}
+			&.selected {
+				background-color: #0bcea5;
+			}
+		}
+	}
 }

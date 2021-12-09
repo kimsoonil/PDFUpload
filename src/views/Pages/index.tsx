@@ -7,7 +7,6 @@ const Pages = () => {
   return (
     <div className="App">
       <ZwibblerComponent />
-      <MovableList />
     </div>
   );
 };

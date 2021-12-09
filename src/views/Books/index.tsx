@@ -170,7 +170,9 @@ const Books = () => {
 
   //TODO Books 클릭시 페이지 이동
   const handleClickBook = (id:any) => {
-    history.push(`/books/pages/${id}`);
+    // history.push(`/Zwibbler.html/${id}`);
+    localStorage.setItem("BookId",id);
+    window.location.href = `/Zwibbler/Zwibbler.html`
   }
 
   const handleDeleteModal = () => {
