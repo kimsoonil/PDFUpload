@@ -34,7 +34,7 @@ const Container: React.FC<Props> = (props: Props) =>{
                 >
                     <div className="iocnGraup">
                         <div className="description" onClick={e => props.handleClickUpdataFile(e , props.item.id)}>
-                            <img src={require("src/images/main/photo.svg").default} alt="icon-poto" />
+                            <img src={require("src/images/main/photo.png").default} alt="icon-poto" />
                             
                         </div>
                         <div className="delete" onClick={(e => props.bookDeeteModal(e,props.item.id))}>

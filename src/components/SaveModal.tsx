@@ -3,7 +3,8 @@ import 'src/assets/scss/reset.scss'
 import 'src/assets/scss/Components.scss'
 import { AiOutlineCheck } from "react-icons/ai";
 interface Props{
- 
+ open
+ handleSaveModal
 }
 
 const SaveModal: React.FC<Props> = (props: Props) =>{
@@ -11,8 +12,7 @@ const SaveModal: React.FC<Props> = (props: Props) =>{
 
   return (
     <div className="modal-shadow" 
-    style={{display : "flex" }}
-    // style={{display :props.errorModalOpen ? "flex" : "none"}}
+     style={{display :props.open ? "flex" : "none"}}
     >
         <div className="modal-save">
             <div className="modal-save-grid">
@@ -28,8 +28,8 @@ const SaveModal: React.FC<Props> = (props: Props) =>{
                     페이지
                 </div>
                 <div className="modal-save-grid-page">
-                    <input type="checkbox" id="all" checked={pageCheckbox==="all" ? true : false}/> <label htmlFor="all" onClick={() => setPageCheckbox("all")}><AiOutlineCheck /></label><div className="checkbox-label">모두</div>
-                    <input type="checkbox" id="select"checked={pageCheckbox==="select" ? true : false}/> <label htmlFor="select" onClick={() => setPageCheckbox("select")}><AiOutlineCheck /></label><div className="checkbox-label">선택범위 </div><input type="text" className="selectionRange" defaultValue="1" disabled={pageCheckbox==="all" ? true : false} />
+                    <input type="checkbox" id="all" defaultChecked={pageCheckbox==="all" ? true : false}/> <label htmlFor="all" onClick={() => setPageCheckbox("all")}><AiOutlineCheck /></label><div className="checkbox-label">모두</div>
+                    <input type="checkbox" id="select" defaultChecked={pageCheckbox==="select" ? true : false}/> <label htmlFor="select" onClick={() => setPageCheckbox("select")}><AiOutlineCheck /></label><div className="checkbox-label">선택범위 </div><input type="text" className="selectionRange" defaultValue="1" disabled={pageCheckbox==="all" ? true : false} />
                 </div>
             </div>
             <div className="modal-save-grid">
@@ -47,7 +47,7 @@ const SaveModal: React.FC<Props> = (props: Props) =>{
                     <div className="modal-save-grid-name">
                         사이즈 
                     </div>
-                    <input type="text" className="input-save" value="210mm x 297mm" disabled/>
+                    <input type="text" className="input-save" defaultValue="210mm x 297mm" disabled/>
                 </div>
             </div>
             <div className="modal-save-grid">
@@ -55,7 +55,7 @@ const SaveModal: React.FC<Props> = (props: Props) =>{
                     경로
                 </div>
                 <div className="modal-save-route">
-                    <input type="text" className="modal-save-route-input" value="파일을 첨부해주세요." />
+                    <input type="text" className="modal-save-route-input" defaultValue="파일을 첨부해주세요." />
                     <div className="modal-save-route-input-btn">찾아보기</div>
                 </div>
             </div>
@@ -68,7 +68,7 @@ const SaveModal: React.FC<Props> = (props: Props) =>{
                 </div>
             </div>
             <div className="modal-save-actions">
-                <div className="modal-actions-close" >취소</div>
+                <div className="modal-actions-close" onClick={props.handleSaveModal}>취소</div>
                 <div className="modal-actions-confirm" >  내보내기</div>
             </div>
             
