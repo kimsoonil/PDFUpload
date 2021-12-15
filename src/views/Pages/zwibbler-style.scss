@@ -1,0 +1,414 @@
+/** @format */
+
+button {
+	font-family: "Apple SD Gothic Neo";
+	font-size: 100%;
+	font-family: inherit;
+	border: 0;
+	padding: 0;
+	background: transparent;
+	box-sizing: content-box;
+}
+.zwibbler {
+	height: 100vh;
+}
+
+.flex-row {
+	display: flex;
+}
+
+.wrap {
+	flex-wrap: wrap;
+}
+
+.flex-col {
+	display: flex;
+	flex-flow: column;
+}
+
+.stretch {
+	flex: 1 1 auto;
+}
+
+.pad {
+	padding: 10px;
+}
+
+.full {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+
+.logo {
+	height: 20px;
+	padding: 13px 16px;
+	display: flex;
+	justify-self: start;
+	border-bottom: 1px solid #545861;
+}
+.page-count {
+	font-family: "Apple SD Gothic Neo";
+	text-align: start;
+	font-weight: bold;
+	font-size: 12px;
+	color: #9ea2a8;
+	margin: 8px 16px;
+}
+.toolbar {
+	position: absolute;
+	left: 20px;
+	top: 20px;
+	padding: 10px;
+	background: #ccc;
+	border-radius: 10px;
+	width: 128px;
+	cursor: move;
+}
+
+.roundbutton {
+	display: flex;
+	flex-flow: row;
+	border-radius: 24px;
+	border: none;
+	text-transform: uppercase;
+	font-weight: bold;
+	padding: 10px;
+	margin: 0 0 10px 0;
+	align-items: center;
+	justify-content: center;
+	font-size: 13px;
+	font-family: euclid-circular-a, sans-serif;
+	height: 48px;
+	box-sizing: border-box;
+}
+
+.roundbutton:hover {
+	box-shadow: 0 2px 4px 0 rgba(26, 25, 25, 0.33);
+}
+
+.roundbutton.blue {
+	background: white;
+	color: #2e69e1;
+	border: 2px solid #2e69e1;
+}
+
+.roundbutton img {
+	margin-right: 10px;
+	max-height: 20px;
+}
+
+.toolpanel button,
+[z-popup] button {
+	width: 64px;
+	height: 64px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: transparent;
+	border: none;
+	outline: none;
+	position: relative;
+}
+
+.toolpanel button:hover,
+.toolpanel button.selected,
+.toolpanel div.selected,
+[z-popup] button:hover {
+	background: #eee;
+}
+
+.toolpanel button img,
+[z-popup] button img {
+	width: 35px;
+	max-height: 35px;
+}
+
+.toolpanel button[disabled] {
+	opacity: 0.5;
+}
+
+.toolpanel .arrowButtons {
+	width: 100%;
+}
+
+.toolpanel .arrowButtons button {
+	width: 100%;
+	height: auto;
+	padding: 5px;
+}
+
+.toolpanel .arrowButtons img {
+	width: auto;
+}
+
+.corner-tab {
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 5px solid #000;
+	position: absolute;
+	right: 8px;
+	bottom: 8px;
+	transform: rotate(-45deg);
+}
+
+[z-popup] {
+	border-radius: 3px;
+	background: #ccc;
+	width: 64px;
+	border: 1px solid white;
+}
+
+.grid {
+	background-size: 10px 10px;
+	background-image: linear-gradient(to right, #ccc 1px, transparent 1px),
+		linear-gradient(to bottom, #ccc 1px, transparent 1px);
+}
+
+.brush-circle {
+	background: black;
+	border-radius: 50%;
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+	flex: 0 0 auto;
+	margin: 3px;
+	align-self: center;
+}
+
+.brushbox {
+	flex: 1 1 auto;
+	justify-content: center;
+}
+
+[z-popup="backgrounds"] {
+	width: 100px;
+}
+
+[z-popup="backgrounds"] div.background {
+	border: 1px solid #ccc;
+	margin: 10px;
+	width: 80px;
+	height: 80px;
+	background-color: white;
+}
+
+[z-popup="polygon"] {
+	display: flex;
+	flex-flow: row wrap;
+	width: 128px;
+}
+
+[z-popup="polygon"] button {
+	font-size: 18px;
+	font-weight: bold;
+}
+
+[z-popup="import"] button {
+	display: flex;
+	flex-flow: column nowrap;
+	font-size: 10px;
+}
+
+.toptoolbar {
+	position: absolute;
+	left: 0;
+	right: 0;
+	padding: 20px;
+	pointer-events: none;
+	div {
+		flex: 1;
+		display: flex;
+	}
+	button {
+		min-width: 36px;
+		height: 36px;
+		background: #373c47;
+		color: #eee;
+		font-size: 14px;
+		font-family: "Apple SD Gothic Neo";
+		border-radius: 5px;
+	}
+	.mybutton {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: none;
+		border-radius: 5px;
+	}
+	.toptoolbar-center {
+		.mybutton {
+			border-radius: 0px;
+
+			&:first-child {
+				border-top-left-radius: 5px;
+				border-bottom-left-radius: 5px;
+			}
+
+			&:last-child {
+				border-top-right-radius: 5px;
+				border-bottom-right-radius: 5px;
+			}
+		}
+	}
+	&-left .download-pdf {
+		margin-left: 8px;
+		padding: 0 12px;
+	}
+	&-right button {
+		margin-right: 8px;
+		padding: 0 12px;
+	}
+}
+
+.toptoolbar .mybutton,
+.toptoolbar input {
+	pointer-events: all;
+	cursor: pointer;
+}
+
+.righttoolbar {
+	width: 240px;
+	background: #383c47;
+	color: white;
+	.mybutton {
+		background: #545861;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 36px;
+		height: 36px;
+		background: #545861;
+		div {
+			background-size: cover !important;
+			width: 16px;
+			height: 16px;
+		}
+		.select-btn {
+			background: url("../../images/pages/select-btn.png") no-repeat;
+		}
+		.square_draw_btn {
+			background: url("../../images/pages/square_draw_btn.png") no-repeat;
+		}
+		&:first-child {
+			border-top-left-radius: 5px;
+			border-bottom-left-radius: 5px;
+		}
+
+		&:last-child {
+			border-top-right-radius: 5px;
+			border-bottom-right-radius: 5px;
+		}
+	}
+	.selected {
+		.select-btn {
+			background: url("../../images/pages/select-btn-click.png") no-repeat;
+		}
+		.square_draw_btn {
+			background: url("../../images/pages/square_draw_btn-click.png") no-repeat;
+		}
+	}
+}
+
+.toptoolbar input {
+	background: #383c47;
+	border-radius: 5px;
+	border: none;
+	color: #eee;
+	height: 36px;
+	box-sizing: border-box;
+	width: 55px;
+	padding-left: 13px;
+	// text-align: "center";
+}
+
+.mybutton.selected {
+	background: #0ccea5;
+}
+
+.bottom-bar {
+	border-bottom: 1px solid #545861;
+}
+
+.zwibbler-page-selector {
+	overflow-y: auto;
+	background: #383c47;
+	width: 200px;
+	text-align: center;
+}
+
+.zwibbler-page-selector [z-page] {
+	border: 3px solid transparent;
+	margin: 5px;
+	display: inline-block;
+	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.zwibbler-page-selector [z-page].selected,
+[z-page]:hover {
+	border: 5px solid #9b9ea3;
+	border-radius: 5px;
+}
+
+.edit-rect > div {
+	display: flex;
+	width: 105px;
+}
+
+.edit-rect input {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+.transform {
+	padding-bottom: 24px;
+	border-bottom: 1px solid #545861;
+	&-title {
+		text-align: left;
+		padding: 24px 0 8px 16px;
+	}
+	&-axis {
+		display: flex;
+		flex-wrap: wrap;
+		div {
+			margin: 0 8px;
+			width: 104px;
+			position: relative;
+		}
+		span {
+			font-size: 14px;
+			position: absolute;
+			top: 7px;
+			left: 8px;
+			color: #9ea2a8;
+		}
+		input {
+			font-size: 13px;
+			width: 74px;
+			height: 24px;
+			background-color: #373c47;
+			border: 0;
+			outline: 0;
+			padding-left: 30px;
+			color: #9ea2a8;
+			&:hover {
+				width: 104px;
+				border: 1px solid #eee;
+				box-sizing: border-box;
+			}
+			&:focus {
+				background-color: #fff;
+			}
+		}
+	}
+}
+.unit {
+	color: #9ea2a8;
+}
+.percent {
+	position: absolute;
+	right: 12px;
+	top: 12px;
+	font-size: 14px;
+}
