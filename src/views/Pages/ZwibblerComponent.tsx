@@ -103,7 +103,7 @@ export const ZwibblerComponent = forwardRef<ZwibblerComponentAPI, ZwibblerProps>
     }));
 
     return (
-        <div {...zwibblerConfig} ref={zwibblerEl} className="zwibbler flex-row" z-init="filename='drawing',filetype='pdf'">
+        <div {...zwibblerConfig} ref={zwibblerEl} className="zwibbler flex-row" z-init="filename='',filetype='pdf'">
            
             <div className="zwibbler-page-selector">
             <div className="logo">
