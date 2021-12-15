@@ -46,7 +46,7 @@
   },
   "scripts": {
     "start": "env-cmd -f .env craco start",
-    "build": "env-cmd -f .env.production craco build",
+    "build": "craco build",
     "test": "craco test",
     "eject": "craco eject",
     "server": "json-server --watch db.json --port 3001",

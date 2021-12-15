@@ -1,9 +1,10 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
+import React, { useState,forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { ZwibblerClass, ZwibblerContext } from "./zwibbler2";
 import "./zwibbler-style.scss";
+import 'src/assets/scss/Components.scss'
 import { rootCertificates } from "tls";
-
+import { AiOutlineCheck } from "react-icons/ai";
 /*TODO
 - main area and toolbar area
 - buttons on top
@@ -66,7 +67,7 @@ export const ZwibblerComponent = forwardRef<ZwibblerComponentAPI, ZwibblerProps>
         viewmargin: "100,0,0,0",
         showcolourpanel: "false",
     };
-
+    const [pageCheckbox, setPageCheckbox] = useState("all");
     const zwibblerEl = useRef<HTMLDivElement | null>(null);
     const ctx = useRef<ZwibblerContext | null>(null);
     
@@ -102,7 +103,7 @@ export const ZwibblerComponent = forwardRef<ZwibblerComponentAPI, ZwibblerProps>
     }));
 
     return (
-        <div {...zwibblerConfig} ref={zwibblerEl} className="zwibbler flex-row">
+        <div {...zwibblerConfig} ref={zwibblerEl} className="zwibbler flex-row" z-init="filename='drawing',filetype='pdf'">
            
             <div className="zwibbler-page-selector">
             <div className="logo">
@@ -134,7 +135,69 @@ export const ZwibblerComponent = forwardRef<ZwibblerComponentAPI, ZwibblerProps>
                 <div className="toptoolbar flex-row">
                     <div className="toptoolbar-left" style={{ justifyContent: "flex-start" }}>
                         <button className="mybutton"onClick={history.goBack}><img src={require("src/images/pages/home.png").default} alt="home" /></button>
-                        <button className="mybutton download-pdf" onClick={props.handleSaveModal}>내보내기</button>
+                        <button className="mybutton download-pdf" z-show-popup="my-menu" 
+                        // onClick={props.handleSaveModal}
+                        >내보내기</button>
+                        <div z-popup="my-menu" className="modal-shadow" z-show-position="center" z-click-dismiss>
+                            <div className="modal-save" >
+                                <div className="modal-save-grid">
+                                    <div className="modal-save-grid-name">
+                                        파일 이름
+                                    </div>    
+                                    <div className="modal-save-grid-input" >
+                                        <input type="text" name='name' placeholder="저장할 파일 이름을 적어주세요" value={props.saveName} z-model='filename' />
+                                    </div>
+                                </div> 
+                                <div className="modal-save-grid">
+                                    <div className="modal-save-grid-name" style={{paddingTop:"24px"}}>
+                                        페이지
+                                    </div>
+                                    <div className="modal-save-grid-page">
+                                        <input type="checkbox" id="all" defaultChecked={pageCheckbox==="all" ? true : false}/> <label htmlFor="all" onClick={() => setPageCheckbox("all")}><AiOutlineCheck /></label><div className="checkbox-label">모두</div>
+                                        <input type="checkbox" id="select" defaultChecked={pageCheckbox==="select" ? true : false}/> <label htmlFor="select" onClick={() => setPageCheckbox("select")}><AiOutlineCheck /></label><div className="checkbox-label">선택범위 </div><input type="text" className="selectionRange" defaultValue="1" disabled={pageCheckbox==="all" ? true : false} />
+                                    </div>
+                                </div>
+                                <div className="modal-save-grid">
+                                    <div className="modal-save-grid-half">
+                                        <div className="modal-save-grid-name">
+                                            포맷
+                                        </div>
+                                        <select name="type" z-model='filetype'>
+                                            <option value="pdf">PDF</option>
+                                            <option value="jpg">JPG</option>
+                                            <option value="png">PNG</option>
+                                        </select>
+                                    </div>
+                                    <div className="modal-save-grid-half">
+                                        <div className="modal-save-grid-name">
+                                            사이즈 
+                                        </div>
+                                        <input type="text" className="input-save" defaultValue="210mm x 297mm" disabled/>
+                                    </div>
+                                </div>
+                                <div className="modal-save-grid">
+                                    <div className="modal-save-grid-name" style={{paddingTop:"24px"}}>
+                                        경로
+                                    </div>
+                                    <div className="modal-save-route">
+                                        <input type="text" className="modal-save-route-input" defaultValue="파일을 첨부해주세요." />
+                                        <div className="modal-save-route-input-btn">찾아보기</div>
+                                    </div>
+                                </div>
+                                <div className="modal-save-grid total-page">
+                                    <div className="total-page-title">
+                                        총 페이지 수
+                                    </div>
+                                    <div className="total-page-number">
+                                        1,123장
+                                    </div>
+                                </div>
+                                <div className="modal-save-actions">
+                                    <div className="modal-actions-close" z-click="hidePopup('my-menu')">취소</div>
+                                    <div className="modal-actions-confirm"   z-click="ctx.download(filetype,filename+'.'+filetype)">  내보내기</div>
+                                </div>
+                        </div>
+                        </div>
                         <div className="download-pdf"title="Download PDF" ref={props.saveRef} z-click={`ctx.download("${props.saveType}", "${props.saveName }")`} style={{ display:"none" }}> 내보내기</div>
                         </div>
                     <div className="toptoolbar-center" style={{ justifyContent: "center" }}>
