@@ -138,14 +138,14 @@ export const ZwibblerComponent = forwardRef<ZwibblerComponentAPI, ZwibblerProps>
                         <button className="mybutton download-pdf" z-show-popup="my-menu" 
                         // onClick={props.handleSaveModal}
                         >내보내기</button>
-                        <div z-popup="my-menu" className="modal-shadow" z-show-position="center" z-click-dismiss>
+                        <div z-popup="my-menu" className="modal-shadow" z-show-position="center" z-click-dismiss="true">
                             <div className="modal-save" >
                                 <div className="modal-save-grid">
                                     <div className="modal-save-grid-name">
                                         파일 이름
                                     </div>    
                                     <div className="modal-save-grid-input" >
-                                        <input type="text" name='name' placeholder="저장할 파일 이름을 적어주세요" value={props.saveName} z-model='filename' />
+                                        <input type="text" name='name' placeholder="저장할 파일 이름을 적어주세요" z-model='filename' />
                                     </div>
                                 </div> 
                                 <div className="modal-save-grid">
@@ -189,7 +189,7 @@ export const ZwibblerComponent = forwardRef<ZwibblerComponentAPI, ZwibblerProps>
                                         총 페이지 수
                                     </div>
                                     <div className="total-page-number">
-                                        1,123장
+                                        1장
                                     </div>
                                 </div>
                                 <div className="modal-save-actions">
