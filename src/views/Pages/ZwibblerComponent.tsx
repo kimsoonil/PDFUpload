@@ -391,7 +391,13 @@ Zwibbler.controller("mycontroller", (scope: any) => {
     scope.oneRectangleSelected = () => {
         return ctx.summary.nodes.length === 1 && ctx.summary.properties["_rect"];
     };
-    
+    ctx.addKeyboardShortcut("Shift+G", (event) => {
+        const nodes = ctx.getSelectedNodes();
+        ctx.alignNodes("middle", nodes);
+        ctx.forEachNode((id) => {
+          console.log("Got node id: ", id);
+        })
+      });
 });
 
 // Zwibbler directive to call a method when enter is clicked.
