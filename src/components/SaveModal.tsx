@@ -5,6 +5,10 @@ import { AiOutlineCheck } from "react-icons/ai";
 interface Props{
  open
  handleSaveModal
+ handleClickSaveFile
+ saveType
+ saveName
+ handleOnChange
 }
 
 const SaveModal: React.FC<Props> = (props: Props) =>{
@@ -20,7 +24,7 @@ const SaveModal: React.FC<Props> = (props: Props) =>{
                     파일 이름
                 </div>    
                 <div className="modal-save-grid-input">
-                    <input type="text" placeholder="저장할 파일 이름을 적어주세요"/>
+                    <input type="text" name='name' placeholder="저장할 파일 이름을 적어주세요" value={props.saveName} onChange={props.handleOnChange}/>
                 </div>
             </div> 
             <div className="modal-save-grid">
@@ -37,10 +41,10 @@ const SaveModal: React.FC<Props> = (props: Props) =>{
                     <div className="modal-save-grid-name">
                         포맷
                     </div>
-                    <select >
-                        <option value="PDF">PDF</option>
-                        <option value="JPG">JPG</option>
-                        <option value="PNG">PNG</option>
+                    <select value={props.saveType} name="type" onChange={props.handleOnChange}>
+                        <option value="pdf">PDF</option>
+                        <option value="jpg">JPG</option>
+                        <option value="png">PNG</option>
                     </select>
                 </div>
                 <div className="modal-save-grid-half">
@@ -69,7 +73,7 @@ const SaveModal: React.FC<Props> = (props: Props) =>{
             </div>
             <div className="modal-save-actions">
                 <div className="modal-actions-close" onClick={props.handleSaveModal}>취소</div>
-                <div className="modal-actions-confirm" >  내보내기</div>
+                <div className="modal-actions-confirm" onClick={props.handleClickSaveFile} >  내보내기</div>
             </div>
             
         </div>

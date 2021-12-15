@@ -7,9 +7,9 @@ import { bookPageInit,bookCreateInit,bookUpdateInit,bookDeleteInit } from 'src/m
 import Container from './Container';
 import DeleteModal from 'src/components/DeleteModal';
 import ErrorModal from 'src/components/ErrorModal'
-import SaveModal from 'src/components/SaveModal';
 import Loading from 'src/components/Loading';
 import _ from "lodash";
+import 'src/assets/fonts/font.css'
 import 'src/assets/scss/reset.scss'
 import 'src/assets/scss/Books.scss'
 interface Props{
@@ -52,10 +52,11 @@ const Books = () => {
     const clientHeight = document.documentElement.clientHeight;
     
     if (scrollTop + clientHeight >= scrollHeight) {
-      setScrollLoading(true);
+     
       // 페이지 끝에 도달하면 추가 데이터를 받아온다
       const bookLength = localStorage.getItem('length');
-         if(pageNumber * 10 < Number(bookLength)){
+         if(pageNumber * 20 < Number(bookLength)){
+          setScrollLoading(true);
         if(data && !error){
           dispatch(bookPageInit())
         } 
@@ -109,7 +110,10 @@ const Books = () => {
         category:"WORKBOOK",
         image_cover:reader.result
       };
+      setScrollLoading(true);
       dispatch(bookCreateInit(newBooks));
+      setTimeout(() =>{setScrollLoading(false);window.location.reload()},1000)
+      
     }
     
   };
@@ -147,7 +151,12 @@ const Books = () => {
       title:BookTitle
     }
     if(e.key === "Enter"){
+      if(!BookTitle){
+        alert("책제목을 입력해주세요");
+        return;
+      }
       dispatch(bookUpdateInit(updateBook));
+      (document.activeElement as HTMLElement).blur();
     }
   }
   
@@ -171,7 +180,7 @@ const Books = () => {
   //TODO Books 클릭시 페이지 이동
   const handleClickBook = (id:any) => {
     history.push(`/books/pages/${id}`);
-    
+    window.location.reload();
   }
 
   const handleDeleteModal = () => {
@@ -204,11 +213,11 @@ const Books = () => {
       </div>
      
        <div className="container">
-        <div className="container-card"><div className="plus" onClick={handleClickCreateFile}></div>
+        <div className="container-card createFile" onClick={handleClickCreateFile}><div className="plus" ></div>
         <input type="file" name="CreateFile" ref={CreateFileRef}  accept=" .jpg, .jpeg, .png" onChange={CreateBook}/>
         </div>
             {data?.map((item,index) =>{
-              if(index < pageNumber * 10)
+              if(index < pageNumber * 20)
                 return(
                     <Container 
                     item={item}

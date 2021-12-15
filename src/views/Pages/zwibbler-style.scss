@@ -1,5 +1,7 @@
 /** @format */
+
 button {
+	font-family: "Apple SD Gothic Neo";
 	font-size: 100%;
 	font-family: inherit;
 	border: 0;
@@ -226,7 +228,7 @@ button {
 		background: #373c47;
 		color: #eee;
 		font-size: 14px;
-		font-family: "Apple SD Gothic";
+		font-family: "Apple SD Gothic Neo";
 		border-radius: 5px;
 	}
 	.mybutton {
@@ -251,7 +253,7 @@ button {
 			}
 		}
 	}
-	&-left button:last-child {
+	&-left .download-pdf {
 		margin-left: 8px;
 		padding: 0 12px;
 	}
@@ -317,6 +319,9 @@ button {
 	color: #eee;
 	height: 36px;
 	box-sizing: border-box;
+	width: 55px;
+	padding-left: 13px;
+	// text-align: "center";
 }
 
 .mybutton.selected {
@@ -397,4 +402,13 @@ button {
 			}
 		}
 	}
+}
+.unit {
+	color: #9ea2a8;
+}
+.percent {
+	position: absolute;
+	right: 12px;
+	top: 12px;
+	font-size: 14px;
 }

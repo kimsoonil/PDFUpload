@@ -76,7 +76,7 @@
             <div class=tools>
                 <button title="Pick tool" z-click="usePickTool()"><img src="../images/select_btn.png" /></button>
                 <button class="Square" title="Square" z-click="useRectangleTool()"><img src="../images/square_draw_btn.png" /></button>
-                <!-- <button title="Insert image" z-click="insertImage()"><i class="fa fa-file-image-o"></i></button> -->
+                <button title="Insert image" z-click="insertImage()"><i class="fa fa-file-image-o"></i></button>
                 
             </div>
             <div class="transform" >
@@ -357,7 +357,96 @@
                 ctx.joinSharedSession(hash["session"]);
             }
         }
-        
+        Zwibbler.controller("mycontroller", (ctx) => {
+  // This is called by Zwibbler
+  
+  // Add this method to Zwibbler to allow it to be called by the HTML button
+  ctx.openpdf = function() {
+        ctx.openFile({
+            accept: "application/pdf",
+            format: "data-uri",
+        }).then((result) => {
+            return DataURIToZwibbler(ctx, result.data);
+        }, (error) => {
+            alert(error.message);
+        });
+    };
+});
+
+// relies on pdf.js from mozilla. Converts the url to the PDF file 
+// into an array of pages, each of which has data-uri of the image, width, and height.
+function PDFToImages(url) {
+    // Returns a promise with the following result:
+    let pdfResult = {
+        pages: []
+    };
+    let scale = 96 / 72;
+    let canvas = document.createElement("canvas");
+    return pdfjsLib.getDocument(url).promise.then((pdf) => {
+        return renderPages(pdf, 1);
+    }).then((result) => {
+        return result;
+    });
+    function renderPages(pdf, pageNo) {
+        if (pageNo > pdf.numPages) {
+            return pdfResult;
+        }
+        return pdf.getPage(pageNo).then((page) => {
+            let view = page.getViewport(scale);
+            canvas.width = view.width;
+            canvas.height = view.height;
+            let renderContext = {
+                canvasContext: canvas.getContext("2d"),
+                viewport: view,
+            };
+            return page.render(renderContext);
+        }).then(() => {
+            pdfResult.pages.push({
+                width: canvas.width,
+                height: canvas.height,
+                url: canvas.toDataURL(),
+            });
+            return renderPages(pdf, pageNo + 1);
+        });
+    }
+}
+
+// Uses PDFToImages to convert url of PDF file and 
+// insert it into the Zwibbler document.
+function DataURIToZwibbler(ctx, dataURI) {
+    return PDFToImages(dataURI).then((result) => {
+        // check if the document is empty or not.
+        let emptyDocument = ctx.getPageCount() === 1 && ctx.getAllNodes().length === 0;
+        ctx.beginTransaction();
+        // go to the last page.
+        let pageCount = ctx.getPageCount();
+        ctx.setCurrentPage(pageCount - 1);
+        // if there is nothing on this page, we want to use it as
+        // the first page of the PDF file. Otherwise, we want to 
+        // create a new page.
+        if (ctx.getAllNodes().length > 0) {
+            pageCount++;
+            ctx.setCurrentPage(ctx.addPage());
+        }
+        for (let i = 0; i < result.pages.length; i++) {
+            let page = result.pages[i];
+            if (i > 0) {
+                ctx.setCurrentPage(ctx.addPage());
+            }
+            console.log("Process page ", page);
+            ctx.setPageSize(i + pageCount - 1, page.width, page.height);
+            ctx.createNode("ImageNode", {
+                url: page.url,
+                layer: "pdfBackground",
+                zIndex: -1,
+            });
+        }
+        ctx.setCurrentPage(pageCount - 1);
+        ctx.commitTransaction();
+        return true;
+    });
+}
+
     </script>
 </body>
 </html>

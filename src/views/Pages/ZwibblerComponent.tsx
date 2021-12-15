@@ -24,6 +24,10 @@ declare let Zwibbler: ZwibblerClass;
 
 export interface ZwibblerProps {
     handleSaveModal
+    PDFRef
+    saveRef
+    saveType
+    saveName
 }
 
 export interface ZwibblerComponentAPI {
@@ -40,6 +44,7 @@ declare global {
 }
 
 export const ZwibblerComponent = forwardRef<ZwibblerComponentAPI, ZwibblerProps>((props, ref) => {
+    console.log(props)
     const history = useHistory();  
     // Zwibbler configuration, see
     // https://zwibbler.com/configurator.html
@@ -72,9 +77,9 @@ export const ZwibblerComponent = forwardRef<ZwibblerComponentAPI, ZwibblerProps>
             console.error("Element ref was null");
             return;
         }
-
+        if(!ctx.current) return;  
         const scope = Zwibbler.attach(zwibblerEl.current, {});
-        //ctx.current = scope.ctx;
+        ctx.current = scope.ctx;
         console.log("Creating...");
         return () => {
             console.log("Destroying");
@@ -104,7 +109,7 @@ export const ZwibblerComponent = forwardRef<ZwibblerComponentAPI, ZwibblerProps>
             <button className="mybutton"onClick={history.goBack}><img src={require("src/images/pages/logo.png").default} alt="logo" /></button>
             </div>
             <div className="page-count">페이지 1</div>
-                <button z-if="ctx.getConfig('showPageSelectorControls')"
+                {/* <button z-if="ctx.getConfig('showPageSelectorControls')"
                     z-click="ctx.setCurrentPage(ctx.insertPage(ctx.getCurrentPage()+1))">
                     +
                 </button>
@@ -112,7 +117,7 @@ export const ZwibblerComponent = forwardRef<ZwibblerComponentAPI, ZwibblerProps>
                     z-click="ctx.deletePage(ctx.getCurrentPage())">
                     -
                 </button>
-                <br />
+                <br /> */}
                 <div z-sort="ctx.movePage($from,$to)">
                     <div z-for="page in ctx.getPageCount()"
                         draggable='true'
@@ -129,7 +134,8 @@ export const ZwibblerComponent = forwardRef<ZwibblerComponentAPI, ZwibblerProps>
                 <div className="toptoolbar flex-row">
                     <div className="toptoolbar-left" style={{ justifyContent: "flex-start" }}>
                         <button className="mybutton"onClick={history.goBack}><img src={require("src/images/pages/home.png").default} alt="home" /></button>
-                        <button className="mybutton" onClick={props.handleSaveModal}>내보내기</button>
+                        <button className="mybutton download-pdf" onClick={props.handleSaveModal}>내보내기</button>
+                        <div className="download-pdf"title="Download PDF" ref={props.saveRef} z-click={`ctx.download("${props.saveType}", "${props.saveName }")`} style={{ display:"none" }}> 내보내기</div>
                         </div>
                     <div className="toptoolbar-center" style={{ justifyContent: "center" }}>
                         <button className="mybutton" z-disabled="ctx.summary.nodes.length < 2"
@@ -158,8 +164,8 @@ export const ZwibblerComponent = forwardRef<ZwibblerComponentAPI, ZwibblerProps>
                         </button>
                     </div>
                     <div className="toptoolbar-right" style={{ justifyContent: "flex-end" }}>
-                        <button> 210mm x 297mm</button>
-                        <input z-model="myzoom" style={{ width: "55px" ,textAlign:'center'}} disabled/>
+                        <button> 210<span className="unit">mm</span> x 297<span className="unit">mm</span></button>
+                        <div style={{ flex:0,position:"relative"}}><input z-model="myzoom" disabled/><span className="unit percent">%</span></div>
                     </div>
                 </div>
             </div>
@@ -172,7 +178,7 @@ export const ZwibblerComponent = forwardRef<ZwibblerComponentAPI, ZwibblerProps>
                         z-selected="ctx.getCurrentTool()==='rectangle'">
                         <div className="square_draw_btn" />
                     </button>
-                    <button title="Insert image" z-click="insertImage()" className="mybutton"><i className="fa fa-file-image-o"></i></button>
+                    <button ref={props.PDFRef} title="Insert image" z-click="insertImage()" className="mybutton"><i className="fa fa-file-image-o"></i></button>
                 </div>
                 <div z-if="true||oneRectangleSelected()" 
                 // className="flex-row wrap edit-rect pad"
@@ -196,7 +202,7 @@ export const ZwibblerComponent = forwardRef<ZwibblerComponentAPI, ZwibblerProps>
 Zwibbler.controller("mycontroller", (scope: any) => {
     let ctx = scope.ctx as ZwibblerContext;
     scope.snapping = false;
-
+    
     // widths of each of the brush types
     scope.widths = {
         highlighter: 30,
@@ -307,7 +313,7 @@ Zwibbler.controller("mycontroller", (scope: any) => {
     // add in the ability to zoom by typing into an input box with this property.
     Object.defineProperty(scope, "myzoom", {
         get() {
-            return Math.round(ctx.getCanvasScale() * 100) + '%';
+            return Math.round(ctx.getCanvasScale() * 100) ;
         },
  
         set(value) {
@@ -322,6 +328,7 @@ Zwibbler.controller("mycontroller", (scope: any) => {
     scope.oneRectangleSelected = () => {
         return ctx.summary.nodes.length === 1 && ctx.summary.properties["_rect"];
     };
+    
 });
 
 // Zwibbler directive to call a method when enter is clicked.

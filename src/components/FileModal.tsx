@@ -5,6 +5,7 @@ import 'src/assets/scss/Components.scss'
 interface Props{
  open
  handleFileModal
+ handleClickCreatePDF
 }
 
 const FileModal: React.FC<Props> = (props: Props) =>{
@@ -20,7 +21,7 @@ const FileModal: React.FC<Props> = (props: Props) =>{
             </div>
             <div className="modal-file-input">
                 <input type="text" className="modal-file-input-text" defaultValue="파일을 첨부해주세요." />
-                <div className="modal-file-input-btn">첨부</div>
+                <div className="modal-file-input-btn" onClick={props.handleClickCreatePDF}>첨부</div>
             </div>
             <input type="file" />
         </div>
