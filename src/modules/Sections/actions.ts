@@ -1,6 +1,9 @@
 export const SECTION_INIT = 'SECTION_INIT' as const;
 export const SECTION_ERROR = 'SECTION_ERROR' as const;
 export const SECTION_SUCCESS = 'SECTION_SUCCESS' as const;
+export const SECTION_SETTING_INIT = 'SECTION_SETTING_INIT' as const;
+export const SECTION_SETTING_ERROR = 'SECTION_SETTING_ERROR' as const;
+export const SECTION_SETTING_SUCCESS = 'SECTION_SETTING_SUCCESS' as const;
 export const SECTION_CREATE_INIT = 'SECTION_CREATE_INIT' as const;
 export const SECTION_CREATE_SUCCESS = 'SECTION_CREATE_SUCCESS' as const;
 export const SECTION_CREATE_ERROR = 'SECTION_CREATE_ERROR' as const;
@@ -28,6 +31,25 @@ export function sectionError(error) {
 export function sectionSuccess(payload) {
   return {
       type: SECTION_SUCCESS,
+      payload
+  };
+}
+export function sectionSettingInit() {
+  return {
+      type: SECTION_SETTING_INIT,
+  };
+}
+
+export function sectionSettingError(error) {
+  return {
+      type: SECTION_SETTING_ERROR,
+      error,
+  };
+}
+
+export function sectionSettingSuccess(payload) {
+  return {
+      type: SECTION_SETTING_SUCCESS,
       payload
   };
 }
@@ -89,6 +111,9 @@ export type GetBooksActionsType =
   | ReturnType<typeof sectionInit>
   | ReturnType<typeof sectionError>
   | ReturnType<typeof sectionSuccess>
+  | ReturnType<typeof sectionSettingInit>
+  | ReturnType<typeof sectionSettingError>
+  | ReturnType<typeof sectionSettingSuccess>
   | ReturnType<typeof sectionCreateInit>
   | ReturnType<typeof sectionCreateSuccess>
   | ReturnType<typeof sectionCreateError>

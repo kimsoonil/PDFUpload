@@ -1,14 +1,12 @@
 import { put, all, call, takeLatest } from 'redux-saga/effects';
 import axios, { AxiosResponse } from 'axios';
 import  * as actionTypes from './actions';
+import {getToken} from 'src/utils/Cookies/Cookies';
 
-const REACT_APP_BASIC_URI : string = (`${process.env.REACT_APP_BASIC_URI}/pages` as string);
-const token = "bfe887177ff7a6b9ad133efe3060c189956bcf5f";
-const config = {
-  headers: { Authorization: `Bearer ${token}` }
-}
+const REACT_APP_BASIC_URI : string = (`${process.env.REACT_APP_BASIC_URI}pages` as string);
+
 function* pagesCallWorker () {
-  
+  const config = getToken();
   try {
     const pages: AxiosResponse = yield call(() => axios.get(REACT_APP_BASIC_URI, config));
     yield put(actionTypes.pageSuccess(pages.data));
@@ -18,12 +16,12 @@ function* pagesCallWorker () {
 }
 
 function* pageCreateWorker({ payload }) {
-  
+  const config = getToken();
   try {
-    //  yield put(actionTypes.pageCreateInit(payload));
+    
     const createBook: AxiosResponse = yield call(() => axios.post(REACT_APP_BASIC_URI,payload,config));
     console.log(createBook)
-    //yield put(actionTypes.pageCreateSuccess(createBook.data));
+    
     const pages: AxiosResponse = yield call(() => axios.get(REACT_APP_BASIC_URI,config));
     yield put(actionTypes.pageSuccess(pages.data));
   } catch (err:any) {
@@ -32,9 +30,9 @@ function* pageCreateWorker({ payload }) {
 }
 
 function* pageUpdateWorker(payload) {
-console.log(payload)
+  const config = getToken();
   try {
-    // yield put(actionTypes.pageUpdateInit(payload));
+    
 
     let updateJson;
     let parameter
@@ -57,9 +55,9 @@ console.log(payload)
 }
 
 function* pageDeleteWorker(payload) {
-  console.log(payload)
+  const config = getToken();
   try {
-    // yield put(actionTypes.pageDeleteInit(payload));
+    
     const deleteBook: AxiosResponse = yield call(() => axios.delete(`${REACT_APP_BASIC_URI}/${payload.payload}`,config));
     console.log(deleteBook)
     const pages: AxiosResponse = yield call(() => axios.get(REACT_APP_BASIC_URI,config));
@@ -69,8 +67,8 @@ function* pageDeleteWorker(payload) {
   }
 }
 
-export function* getBooksSaga() {
-  // yield takeEvery(PAGE_PAGE_INIT, getBooks),
+export function* getPagesSaga() {
+  
   yield all([
     takeLatest(actionTypes.PAGE_INIT , pagesCallWorker),
     takeLatest(actionTypes.PAGE_CREATE_INIT as any, pageCreateWorker), 

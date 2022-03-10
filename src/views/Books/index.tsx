@@ -1,14 +1,15 @@
 import React, {useRef,useState,useEffect,useCallback,useMemo} from 'react'
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
+import _ from "lodash";
 import { RootReducerType } from 'src/modules';
 import { bookPageInit,bookCreateInit,bookUpdateInit,bookDeleteInit } from 'src/modules/Books';
-
+import { logoutRequest } from 'src/modules/Login';
 import Container from './Container';
 import DeleteModal from 'src/components/DeleteModal';
 import ErrorModal from 'src/components/ErrorModal'
 import Loading from 'src/components/Loading';
-import _ from "lodash";
+
 import 'src/assets/fonts/font.css'
 import 'src/assets/scss/reset.scss'
 import 'src/assets/scss/Books.scss'
@@ -23,7 +24,7 @@ const Books = () => {
   const dispatch = useDispatch();
   const CreateFileRef = useRef<HTMLInputElement | null>(null);
   const UpdataFileRef = useRef<HTMLInputElement | null>(null);
-  const BookState = useSelector((state: RootReducerType) => state.contents);
+  const BookState = useSelector((state: RootReducerType) => state.books);
   const [scrollLoading, setScrollLoading] = useState(false)
   const [workBooksListId, setWorkBooksListId] = useState<string | null>();
   const [pageNumber, setPageNumber] = useState(1);
@@ -40,7 +41,7 @@ const Books = () => {
     
   }, [dispatch]); 
 
-  console.log(BookState);
+  
   const { loading, data, error, length } = BookState;
   if( _.isEmpty(length)){
     localStorage.setItem('length',String(length))
@@ -91,6 +92,11 @@ const Books = () => {
         open:true,
         title:`${error.message}`,
       })
+      console.log(error)
+       console.log(error.response?.status)
+       if(error.response?.status === 403 && errorModal.open === false){
+        logOut();
+       }
     };
   },[error]);
 
@@ -112,7 +118,7 @@ const Books = () => {
       };
       setScrollLoading(true);
       dispatch(bookCreateInit(newBooks));
-      setTimeout(() =>{setScrollLoading(false);window.location.reload()},1000)
+      setTimeout(() =>{setScrollLoading(false);},1000)
       
     }
     
@@ -179,8 +185,9 @@ const Books = () => {
 
   //TODO Books 클릭시 페이지 이동
   const handleClickBook = (id:any) => {
-    history.push(`/books/pages/${id}`);
-    window.location.reload();
+    // history.push(`/books/pages/${id}`);
+    history.push(`/books/screen/${id}`);
+    
   }
 
   const handleDeleteModal = () => {
@@ -192,28 +199,26 @@ const Books = () => {
       open:false,
     })
   }
+  const logOut = () => {
+    dispatch(logoutRequest());
+  }
+if(loading) return <Loading />
 
-  if (
-    _.isEmpty(data) && loading) return ( 
-  <div className="Main">
-    <div className="sideBar">
-      <div className="list activate"><div className="img"></div>문제집</div>
-      <div className="list"> <div className="img"></div>문제집</div>
-    </div>
-    <div className="container"></div>
-    <Loading />
-    </div>
-    )
-    
   return (
-    <div className="Main">
+    <div className="main">
+      <div className="main-header">
+        <div className='logo'>
+          <img src={require("src/images/pages/logo.svg").default} alt="logo" />
+        </div>
+        <div className='logOut' onClick={logOut}>로그아웃</div>
+      </div>
+      <div className="main-content">
       <div className="sideBar">
-          <div className="list activate"><div className="img"></div>문제집</div>
-          <div className="list"> <div className="img"></div>문제집</div>
+        <div className="list activate"><div className="img"></div><div>문서</div></div>
       </div>
      
        <div className="container">
-        <div className="container-card createFile" onClick={handleClickCreateFile}><div className="plus" ></div>
+        <div className="container-card createFile" style={{backgroundColor : '#b3b8c0'}} onClick={handleClickCreateFile}><div className="plus" ></div>
         <input type="file" name="CreateFile" ref={CreateFileRef}  accept=" .jpg, .jpeg, .png" onChange={CreateBook}/>
         </div>
             {data?.map((item,index) =>{
@@ -239,9 +244,10 @@ const Books = () => {
           <Loading />
         )}
        </div>
+       </div>
        <DeleteModal 
-          title="문제집 삭제" 
-          content="데이터가 모두 삭제 됩니다." 
+          title="페이지 삭제" 
+          content="관련 데이터가 모두 삭제 됩니다." 
           isOpen={DeleteModalOpen} 
           handleDeleteModal={handleDeleteModal} 
           bookDeete={bookDeete} 
@@ -250,7 +256,7 @@ const Books = () => {
           title={errorModal.title} 
           errorModalOpen={errorModal.open} 
           handleErrorModal={handleErrorModal}  />
-       {/* <SaveModal /> */}
+      
     </div>
     
   );

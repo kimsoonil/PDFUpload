@@ -1,5 +1,8 @@
 /** @format */
-
+a {
+	color: #eee;
+	text-decoration: none;
+}
 button {
 	font-family: "Apple SD Gothic Neo";
 	font-size: 100%;
@@ -8,6 +11,7 @@ button {
 	padding: 0;
 	background: transparent;
 	box-sizing: content-box;
+	cursor: pointer;
 }
 .zwibbler {
 	height: 100vh;
@@ -21,11 +25,6 @@ button {
 	flex-wrap: wrap;
 }
 
-.flex-col {
-	display: flex;
-	flex-flow: column;
-}
-
 .stretch {
 	flex: 1 1 auto;
 }
@@ -34,20 +33,12 @@ button {
 	padding: 10px;
 }
 
-.full {
-	position: absolute;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-}
-
 .logo {
-	height: 20px;
 	padding: 13px 16px;
 	display: flex;
-	justify-self: start;
+	justify-content: start;
 	border-bottom: 1px solid #545861;
+	cursor: pointer;
 }
 .page-count {
 	font-family: "Apple SD Gothic Neo";
@@ -55,161 +46,9 @@ button {
 	font-weight: bold;
 	font-size: 12px;
 	color: #9ea2a8;
-	margin: 8px 16px;
-}
-.toolbar {
-	position: absolute;
-	left: 20px;
-	top: 20px;
-	padding: 10px;
-	background: #ccc;
-	border-radius: 10px;
-	width: 128px;
-	cursor: move;
-}
-
-.roundbutton {
-	display: flex;
-	flex-flow: row;
-	border-radius: 24px;
-	border: none;
-	text-transform: uppercase;
-	font-weight: bold;
-	padding: 10px;
-	margin: 0 0 10px 0;
-	align-items: center;
-	justify-content: center;
-	font-size: 13px;
-	font-family: euclid-circular-a, sans-serif;
-	height: 48px;
-	box-sizing: border-box;
-}
-
-.roundbutton:hover {
-	box-shadow: 0 2px 4px 0 rgba(26, 25, 25, 0.33);
-}
-
-.roundbutton.blue {
-	background: white;
-	color: #2e69e1;
-	border: 2px solid #2e69e1;
-}
-
-.roundbutton img {
-	margin-right: 10px;
-	max-height: 20px;
-}
-
-.toolpanel button,
-[z-popup] button {
-	width: 64px;
-	height: 64px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background: transparent;
-	border: none;
-	outline: none;
-	position: relative;
-}
-
-.toolpanel button:hover,
-.toolpanel button.selected,
-.toolpanel div.selected,
-[z-popup] button:hover {
-	background: #eee;
-}
-
-.toolpanel button img,
-[z-popup] button img {
-	width: 35px;
-	max-height: 35px;
-}
-
-.toolpanel button[disabled] {
-	opacity: 0.5;
-}
-
-.toolpanel .arrowButtons {
-	width: 100%;
-}
-
-.toolpanel .arrowButtons button {
-	width: 100%;
-	height: auto;
-	padding: 5px;
-}
-
-.toolpanel .arrowButtons img {
-	width: auto;
-}
-
-.corner-tab {
-	width: 0;
-	height: 0;
-	border-left: 5px solid transparent;
-	border-right: 5px solid transparent;
-	border-top: 5px solid #000;
-	position: absolute;
-	right: 8px;
-	bottom: 8px;
-	transform: rotate(-45deg);
-}
-
-[z-popup] {
-	border-radius: 3px;
-	background: #ccc;
-	width: 64px;
-	border: 1px solid white;
-}
-
-.grid {
-	background-size: 10px 10px;
-	background-image: linear-gradient(to right, #ccc 1px, transparent 1px),
-		linear-gradient(to bottom, #ccc 1px, transparent 1px);
-}
-
-.brush-circle {
-	background: black;
-	border-radius: 50%;
-	box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
-	flex: 0 0 auto;
-	margin: 3px;
-	align-self: center;
-}
-
-.brushbox {
-	flex: 1 1 auto;
-	justify-content: center;
-}
-
-[z-popup="backgrounds"] {
-	width: 100px;
-}
-
-[z-popup="backgrounds"] div.background {
-	border: 1px solid #ccc;
-	margin: 10px;
-	width: 80px;
-	height: 80px;
-	background-color: white;
-}
-
-[z-popup="polygon"] {
-	display: flex;
-	flex-flow: row wrap;
-	width: 128px;
-}
-
-[z-popup="polygon"] button {
-	font-size: 18px;
-	font-weight: bold;
-}
-
-[z-popup="import"] button {
-	display: flex;
-	flex-flow: column nowrap;
-	font-size: 10px;
+	margin: 16px 16px;
+	height: 32px;
+	line-height: 32px;
 }
 
 .toptoolbar {
@@ -230,6 +69,9 @@ button {
 		font-size: 14px;
 		font-family: "Apple SD Gothic Neo";
 		border-radius: 5px;
+		&:hover {
+			background: #252a35;
+		}
 	}
 	.mybutton {
 		display: flex;
@@ -256,6 +98,7 @@ button {
 	&-left .download-pdf {
 		margin-left: 8px;
 		padding: 0 12px;
+		width: 50px;
 	}
 	&-right button {
 		margin-right: 8px;
@@ -269,7 +112,7 @@ button {
 	cursor: pointer;
 }
 
-.righttoolbar {
+.rightToolbar {
 	width: 240px;
 	background: #383c47;
 	color: white;
@@ -283,14 +126,14 @@ button {
 		background: #545861;
 		div {
 			background-size: cover !important;
-			width: 16px;
-			height: 16px;
+			width: 20px;
+			height: 20px;
 		}
 		.select-btn {
-			background: url("../../images/pages/select-btn.png") no-repeat;
+			background: url("../../images/pages/select-btn.svg") no-repeat;
 		}
 		.square_draw_btn {
-			background: url("../../images/pages/square_draw_btn.png") no-repeat;
+			background: url("../../images/pages/square_draw_btn.svg") no-repeat;
 		}
 		&:first-child {
 			border-top-left-radius: 5px;
@@ -304,11 +147,11 @@ button {
 	}
 	.selected {
 		.select-btn {
-			background: url("../../images/pages/select-btn-click.png") no-repeat;
+			background: url("../../images/pages/select-btn-click.svg") no-repeat;
 		}
-		.square_draw_btn {
-			background: url("../../images/pages/square_draw_btn-click.png") no-repeat;
-		}
+		// .square_draw_btn {
+		// 	background: url("../../images/pages/square_draw_btn-click.svg") no-repeat;
+		// }
 	}
 }
 
@@ -320,8 +163,11 @@ button {
 	height: 36px;
 	box-sizing: border-box;
 	width: 55px;
-	padding-left: 13px;
-	// text-align: "center";
+	text-align: right;
+	padding-right: 22px;
+	&:hover {
+		background: #252a35;
+	}
 }
 
 .mybutton.selected {
@@ -362,11 +208,14 @@ button {
 	min-width: 0;
 }
 .transform {
-	padding-bottom: 24px;
-	border-bottom: 1px solid #545861;
+	padding-bottom: 16px;
+	padding-top: 16px;
 	&-title {
 		text-align: left;
-		padding: 24px 0 8px 16px;
+		padding: 0px 0 8px 16px;
+		font-size: 13px;
+		font-weight: 700;
+		color: #f0f1f2;
 	}
 	&-axis {
 		display: flex;
@@ -375,30 +224,33 @@ button {
 			margin: 0 8px;
 			width: 104px;
 			position: relative;
+			border-radius: 5px;
 		}
 		span {
 			font-size: 14px;
 			position: absolute;
-			top: 7px;
+			top: 5px;
 			left: 8px;
 			color: #9ea2a8;
 		}
 		input {
 			font-size: 13px;
-			width: 74px;
+			width: 104px;
 			height: 24px;
 			background-color: #373c47;
 			border: 0;
 			outline: 0;
 			padding-left: 30px;
+			box-sizing: border-box;
 			color: #9ea2a8;
+			border-radius: 5px;
 			&:hover {
 				width: 104px;
-				border: 1px solid #eee;
 				box-sizing: border-box;
+				background-color: #555963;
 			}
 			&:focus {
-				background-color: #fff;
+				background-color: #252a35;
 			}
 		}
 	}
@@ -408,7 +260,178 @@ button {
 }
 .percent {
 	position: absolute;
-	right: 12px;
+	right: 8px;
 	top: 12px;
 	font-size: 14px;
+}
+.hover {
+	display: none;
+	padding-left: 29px;
+	&:hover {
+		outline: 1px solid #b3b8c0;
+		box-sizing: border-box;
+		width: calc(100% - 2px);
+		margin-left: 1px;
+	}
+}
+.registration {
+	font-family: "Apple SD Gothic Neo";
+	&-title {
+		margin: 16px;
+		font-size: 14px;
+		color: "#eee";
+	}
+	&-list-item {
+		&-link {
+			padding: 4px 0;
+			justify-content: space-between;
+		}
+		&-title {
+			padding: 4px 4px 4px;
+			&-input {
+				span {
+					font-size: 13px;
+					align-items: center;
+					width: 145px;
+					height: 24px;
+				}
+				input {
+					width: 130%;
+				}
+			}
+			&:hover {
+				outline: 1px solid #b3b8c0;
+				box-sizing: border-box;
+				width: calc(100% - 2px);
+				margin-left: 1px;
+				.icon-hover {
+					display: flex;
+				}
+			}
+		}
+		&-title,
+		&-link {
+			display: flex;
+			align-items: center;
+			font-size: 12px;
+
+			a {
+				background-color: #383d48;
+				width: 20px;
+				height: 20px;
+				border-radius: 4px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin-right: 16px;
+			}
+			input {
+				height: 25px;
+				font-size: 13px;
+				background-color: transparent;
+				border: 0;
+				outline: 0;
+				color: #e8ebed;
+				box-sizing: border-box;
+
+				&:focus {
+					background-color: #fff;
+					color: #383d48;
+				}
+			}
+			.arrow {
+				transition: 0.3s;
+				transform: rotate(0deg);
+				width: 15px;
+				height: 15px;
+				background: url("../../images/pages/arrow-left.png") no-repeat center
+					center;
+				padding-right: 10px;
+			}
+		}
+
+		.icon-hover {
+			display: none;
+			align-items: center;
+			&:hover {
+				display: flex;
+			}
+		}
+		.icon-link-box {
+			width: 24px;
+			height: 24px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			&:hover {
+				background-color: rgba(13, 16, 26, 0.7);
+				border-radius: 4px;
+			}
+		}
+		.icon-link {
+			width: 12px;
+			height: 12px;
+			margin-right: 4px;
+			background: url("../../images/pages/link.png") no-repeat center center;
+			background-size: contain;
+		}
+		.chain {
+			display: block;
+			width: 9px;
+			height: 9px;
+			background: url("../../images/pages/chain.png") no-repeat center center;
+			background-size: contain;
+		}
+		.actions {
+			display: flex;
+		}
+		.icon-trash {
+			width: 24px;
+			height: 24px;
+			background: url("../../images/pages/trash.png") no-repeat center center;
+			margin: 0;
+			&:hover {
+				background-color: rgba(13, 16, 26, 0.7);
+				border-radius: 4px;
+			}
+		}
+		&-delect {
+			margin-left: 8px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 32px;
+			height: 36px;
+			background-color: #383d48;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+	}
+	.active {
+		background-color: #252a35;
+		.hover {
+			display: block;
+			align-items: center;
+		}
+		.arrow {
+			transition: 0.3s;
+			transform: rotate(90deg);
+		}
+	}
+}
+.ceateSection {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	button {
+		width: 100%;
+		height: 36px;
+		background-color: #252a35;
+		border-radius: 5px;
+		color: #fff;
+		font-size: 12px;
+		&:hover {
+			background-color: #0bcea5;
+		}
+	}
 }

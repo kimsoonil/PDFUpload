@@ -1,20 +1,21 @@
 import  * as actionTypes from './actions';
-import { PagesType } from './types';
 import { AxiosError } from 'axios';
 
 type State = {
   loading: boolean;
   data: {[key:string]:any} | null;
+  settingData: {[key:string]:any} | null;
   error: AxiosError | null;
 };
 
 const initiaState = {
   loading: false,
   data: null,
+  settingData: null,
   error: null
 };
 
-export default function users(
+export default function sections(
   state: State = initiaState,
   action: actionTypes.GetBooksActionsType
 ): State {
@@ -36,6 +37,23 @@ export default function users(
         loading: false,
         error: action.error
       }
+      case actionTypes.SECTION_SETTING_INIT:
+        return {
+          ...state,
+          loading: true
+        };
+      case actionTypes.SECTION_SETTING_SUCCESS:
+        return {
+          ...state,
+          loading: false,
+          settingData: action.payload
+        }
+      case actionTypes.SECTION_SETTING_ERROR:
+        return {
+          ...state,
+          loading: false,
+          error: action.error
+        }
       case actionTypes.SECTION_CREATE_INIT:
         return {
           ...state,

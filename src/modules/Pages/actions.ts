@@ -85,7 +85,7 @@ export function pageDeleteSuccess(payload) {
       payload
   };
 }
-export type GetBooksActionsType =
+export type GetPagessActionsType =
   | ReturnType<typeof pageInit>
   | ReturnType<typeof pageError>
   | ReturnType<typeof pageSuccess>

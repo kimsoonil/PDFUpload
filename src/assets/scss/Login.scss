@@ -1,0 +1,137 @@
+/** @format */
+
+.login-shadow {
+	font-family: "Apple SD Gothic Neo";
+	background-color: #f0f1f2;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+}
+
+.login {
+	width: 700px;
+	height: 100%;
+	background: #ffffff;
+	div {
+		font-family: "Apple SD Gothic Neo";
+	}
+
+	&-logo {
+		width: 90%;
+		height: 25px;
+		background: url("../../images/login/login-logo.svg") no-repeat;
+		background-size: contain;
+		margin: 27px 40px;
+	}
+	&-content {
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		font-weight: bold;
+	}
+	&-title {
+		width: 305px;
+		height: 104px;
+		text-align: center;
+		font-weight: bold;
+		font-size: 40px;
+		margin-bottom: 28px;
+		line-height: 120%;
+		letter-spacing: -0.01em;
+	}
+	&-form {
+		display: flex;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		& > div:hover .login-icon {
+			display: block;
+		}
+	}
+	.error-message {
+		color: #ef284c;
+		font-size: 12px;
+		margin-top: 8px;
+		width: 100%;
+		margin-left: 0;
+		align-items: flex-start;
+		font-family: Apple SD Gothic Neo;
+		letter-spacing: -0.3px;
+		font-weight: normal;
+	}
+	input {
+		width: 400px;
+		height: 48px;
+		padding-left: 16px;
+		background: #f0f1f2;
+		border: 0;
+		box-sizing: border-box;
+		border-radius: 10px;
+		margin-top: 12px;
+		color: #303538;
+		font-weight: bold;
+		&::placeholder {
+			color: #9ea3aa;
+			font-size: 16px;
+			font-family: Poppins;
+		}
+	}
+	button {
+		margin-top: 16px;
+		width: 400px;
+		height: 56px;
+		background: #111111;
+		border-radius: 10px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: #fff;
+		font-size: 16px;
+		font-family: "Apple SD Gothic Neo Bold";
+	}
+	&-action {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		margin-top: 40px;
+		color: #79828a;
+		font-size: 14px;
+		a {
+			cursor: pointer;
+			width: 194px;
+			height: 56px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background: #00b48e;
+			border-radius: 10px;
+			font-size: 16px;
+			font-weight: 700;
+			color: #fff;
+		}
+		a:first-child {
+			margin-right: 12px;
+			background: #e6e8eb;
+			color: #383d48;
+		}
+		.line {
+			color: #e8e8e8;
+		}
+	}
+}
+.login-icon {
+	position: absolute;
+	right: 16px;
+	top: 26px;
+	display: none;
+	cursor: pointer;
+	img {
+		width: 16px;
+		height: 16px;
+	}
+}

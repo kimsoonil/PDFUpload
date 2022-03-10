@@ -14,9 +14,9 @@ const initiaState = {
   error: null
 };
 
-export default function users(
+export default function pages(
   state: State = initiaState,
-  action: actionTypes.GetBooksActionsType
+  action: actionTypes.GetPagessActionsType
 ): State {
   switch (action.type) {
     case actionTypes.PAGE_INIT:

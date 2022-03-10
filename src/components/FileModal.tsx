@@ -5,23 +5,23 @@ import 'src/assets/scss/Components.scss'
 interface Props{
  open
  handleFileModal
- handleClickCreatePDF
+ importClicked
 }
 
 const FileModal: React.FC<Props> = (props: Props) =>{
-   
   return (
     <div className="modal-shadow" 
     
      style={{display :props.open ? "flex" : "none"}}
     >
+        <div className='home-move' onClick={() => window.location.replace("/books")}><img src={require("src/images/pages/arrow-left.svg").default} alt="arrow" />홈 이동</div>
         <div className="modal-file">
             <div className="modal-file-title">
                 파일 첨부
             </div>
             <div className="modal-file-input">
-                <input type="text" className="modal-file-input-text" defaultValue="파일을 첨부해주세요." />
-                <div className="modal-file-input-btn" onClick={props.handleClickCreatePDF}>첨부</div>
+                <input type="text" className="modal-file-input-text" placeholder="파일을 첨부해주세요." />
+                <div className="modal-file-input-btn" onClick={props.importClicked}>찾아보기</div>
             </div>
             <input type="file" />
         </div>
