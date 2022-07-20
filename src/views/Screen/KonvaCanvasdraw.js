@@ -1,7 +1,6 @@
 /** @format */
 
 import React, { useState, useRef, useEffect } from "react";
-import ReactDOM from "react-dom";
 import { Stage, Layer, Rect, Transformer } from "react-konva";
 import Loading from "src/components/Loading";
 

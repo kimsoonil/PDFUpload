@@ -6,7 +6,6 @@ import { PDFInit } from 'src/modules/PDF';
 import { pdfjs ,Document, Page} from "react-pdf";
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
-import {PDFtoIMG} from 'react-pdf-to-image';
 import { RootReducerType } from 'src/modules';
 
 import FileModal from 'src/components/FileModal';

@@ -7,7 +7,7 @@ import { RootReducerType } from 'src/modules';
 // import { sectionInit,sectionCreateInit,sectionUpdateInit,sectionDeleteInit } from 'src/modules/Sections';
 
 // import Loading from 'src/components/Loading';
-import { ZwibblerComponent, ZwibblerComponentAPI } from './ZwibblerComponent';
+// import { ZwibblerComponent, ZwibblerComponentAPI } from './ZwibblerComponent';
 
 import 'src/assets/fonts/font.css'
 import 'src/assets/scss/reset.scss'
@@ -21,7 +21,7 @@ const Pages = () => {
   const sectionState = useSelector((state: RootReducerType) => state.sections);
   const [isFileOpen, setIsFileOpen] = useState(true);
   const [isSaveOpen, setIsSaveOpen] = useState(false);
-  const zwibbler = useRef<ZwibblerComponentAPI | null>(null);
+  // const zwibbler = useRef<ZwibblerComponentAPI | null>(null);
   
   // useEffect(() => {
   //   dispatch(sectionInit());   
@@ -29,18 +29,18 @@ const Pages = () => {
   
   const { loading, data, error } = sectionState;
 
-  async function importClicked() {
-    if (!zwibbler.current || !zwibbler.current.ctx) return;
+  // async function importClicked() {
+  //   if (!zwibbler.current || !zwibbler.current.ctx) return;
 
-    // instead, you would get the url from your server here...
-    let dataURI = (await zwibbler.current.ctx.openFile({
-      format: "data-uri",
-      accept: "application/pdf",
-    })).data as string;
+  //   // instead, you would get the url from your server here...
+  //   let dataURI = (await zwibbler.current.ctx.openFile({
+  //     format: "data-uri",
+  //     accept: "application/pdf",
+  //   })).data as string;
 
-    zwibbler.current.openPDFPage(dataURI, 0);
-    handleFileModal();
-  }
+  //   zwibbler.current.openPDFPage(dataURI, 0);
+  //   handleFileModal();
+  // }
   
   const handleFileModal = () => {
     setIsFileOpen(!isFileOpen);
@@ -68,17 +68,17 @@ const Pages = () => {
   
   async function savePageClicked(saveVale) {
   console.log(saveVale)
-    if (!zwibbler.current || !zwibbler.current.ctx) return;
-    let pageno = zwibbler.current.ctx.getCurrentPage();
+    // if (!zwibbler.current || !zwibbler.current.ctx) return;
+    // let pageno = zwibbler.current.ctx.getCurrentPage();
     
 
-    // download for the demo
-    zwibbler.current.ctx.download(`${saveVale.name}.${saveVale.extension}`, { pages: saveVale.pageno, format: saveVale.extension });
+    // // download for the demo
+    // zwibbler.current.ctx.download(`${saveVale.name}.${saveVale.extension}`, { pages: saveVale.pageno, format: saveVale.extension });
   }
   //  if(loading) return <Loading />
   return (
     <div >
-      
+{/*       
       <ZwibblerComponent 
         ref={zwibbler}
         data={data}
@@ -86,7 +86,7 @@ const Pages = () => {
         importClicked={importClicked}
         handleSaveModal={() => handleSaveModal()}
         />
-      <FileModal open={isFileOpen} handleFileModal={handleFileModal} importClicked={importClicked} />
+      <FileModal open={isFileOpen} handleFileModal={handleFileModal} importClicked={importClicked} /> */}
       <SaveModal open={isSaveOpen} handleSaveModal={handleSaveModal} savePageClicked={(e) => savePageClicked(e)} />
     </div>
   );
