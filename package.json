@@ -59,9 +59,10 @@
   },
   "scripts": {
     "start": "env-cmd -f .env craco start",
-    "build": "CI= react-scripts build",
+    "build": "react-scripts build",
     "test": "craco test",
     "eject": "craco eject",
+    "deploy":"gh-pages -d build",
     "server": "json-server --watch db.json --port 3001",
     "electron-start": "concurrently \"cross-env NODE_ENV=development BROWSER=none npm run start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-build": "npm run build && electron-builder",
@@ -87,6 +88,7 @@
   },
   "devDependencies": {
     "craco-alias": "^3.0.1",
+    "gh-pages": "^4.0.0",
     "sass": "^1.43.5"
   },
   "homepage": "https://kimsoonil.github.io/PDFUpload/"
