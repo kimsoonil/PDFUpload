@@ -14,7 +14,7 @@ const FileModal: React.FC<Props> = (props: Props) =>{
     
      style={{display :props.open ? "flex" : "none"}}
     >
-        <div className='home-move' onClick={() => window.location.replace("/books")}><img src={require("src/images/pages/arrow-left.svg").default} alt="arrow" />홈 이동</div>
+        
         <div className="modal-file">
             <div className="modal-file-title">
                 파일 첨부
