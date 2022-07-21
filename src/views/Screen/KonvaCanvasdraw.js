@@ -13,7 +13,7 @@ const Rectangle = ({
 }) => {
 	const shapeRef = React.useRef();
 	const trRef = React.useRef();
-
+	
 	React.useEffect(() => {
 		if (isSelected) {
 			// we need to attach transformer manually
@@ -97,12 +97,13 @@ const KonvaCanvasdraw = (props) => {
 	const [newAnnotation, setNewAnnotation] = useState([]);
 	const [selectedId, selectShape] = useState(null);
 	const [rectangles, setRectangles] = useState([]);
-
+	console.log("selectTool",props.selectTool)
 	useEffect(() => {
 		// document.getElementById("StageDiv")
 		// document.getElementById("StageDiv")
 	});
 	const handleMouseDown = (event) => {
+		
 		if (props.selectTool === "square_draw") {
 			if (newAnnotation.length === 0) {
 				const { x, y } = event.target.getStage().getPointerPosition();

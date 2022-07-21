@@ -13,6 +13,7 @@ import Loading from 'src/components/Loading';
 import 'src/assets/fonts/font.css'
 import 'src/assets/scss/reset.scss'
 import 'src/assets/scss/Books.scss'
+
 interface Props{
   id:           any;
   title:        string;

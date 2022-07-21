@@ -16,6 +16,13 @@ import PartialSetting from './PartialSetting';
 import ScreenContainer from './ScreenContainer';
 import Loading from 'src/components/Loading';
 
+import 'src/assets/fonts/font.css';
+import 'src/assets/scss/reset.scss';
+import 'src/assets/scss/Pages.scss';
+import 'src/assets/scss/Books.scss'
+import "../Pages/zwibbler-style.scss";
+
+
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 

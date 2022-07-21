@@ -14,8 +14,7 @@ const Root: React.FC = () => {
   const token = cookies.get('token');
   const dispatch = useDispatch();
   const isLogin = useSelector((state: RootReducerType) => state.login.isLoggingIn);
-  console.log('isLogin',isLogin)
-  console.log('token',token)
+  
   
    if(token === undefined || token === "" || token === null){
      dispatch(logoutSuccess());
@@ -32,11 +31,11 @@ const Root: React.FC = () => {
     </>
     ) : (
     <>
-      <Route path="/books" exact component={(Books)} />
-      <Route path="/books/screen"  component={Screen} />
-      <Route path="/books/pages" exact component={Pages} />
-      <Route path="/books/pages/:id" exact component={Pages} />
-      <Redirect path="*" to="/books/screen" />
+      {/* <Route path="/books" exact component={(Books)} /> */}
+      <Route path="/"  component={Screen} />
+      {/* <Route path="/books/pages" exact component={Pages} />
+      <Route path="/books/pages/:id" exact component={Pages} /> */}
+      <Redirect path="*" to="/" />
     </>
     )}
 
